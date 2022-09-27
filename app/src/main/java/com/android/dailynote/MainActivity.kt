@@ -18,7 +18,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
 
         }
         with(mDataBinding){
-
+            vm = mViewModel
         }
     }
 }
