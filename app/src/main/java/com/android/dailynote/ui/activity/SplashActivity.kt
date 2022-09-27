@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import com.android.dailynote.MainActivity
 import com.android.dailynote.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

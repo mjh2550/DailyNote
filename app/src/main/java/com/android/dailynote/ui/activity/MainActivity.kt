@@ -1,8 +1,7 @@
-package com.android.dailynote
+package com.android.dailynote.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.activity.viewModels
+import com.android.dailynote.R
 import com.android.dailynote.base.BaseActivity
 import com.android.dailynote.databinding.ActivityMainBinding
 import com.android.dailynote.ui.viewmodel.MainViewModel
