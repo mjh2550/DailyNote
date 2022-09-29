@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_home">
+
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.android.dailynote.ui.fragment.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/fragment_note_list"
+        android:name="com.android.dailynote.ui.fragment.NoteListFragment"
+        android:label="NoteListFragment" />
+    <fragment
+        android:id="@+id/fragment_profile"
+        android:name="com.android.dailynote.ui.fragment.ProfileFragment"
+        android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/fragment_etc"
+        android:name="com.android.dailynote.ui.fragment.EtcFragment"
+        android:label="EtcFragment" />
+</navigation>
