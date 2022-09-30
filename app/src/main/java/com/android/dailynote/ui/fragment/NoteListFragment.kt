@@ -2,6 +2,7 @@ package com.android.dailynote.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.dailynote.R
 import com.android.dailynote.adapters.NoteListAdapter
+import com.android.dailynote.adapters.NoteListListener
 import com.android.dailynote.base.BaseFragment
 import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.databinding.FragmentNoteListBinding
@@ -27,15 +29,23 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     override fun getLayoutRes() = R.layout.fragment_note_list
 
     override fun subscribeUi() {
+
+        val adapter = NoteListAdapter(NoteListListener {
+                noteId ->
+            Toast.makeText(requireContext(),"${noteId} 탭",Toast.LENGTH_SHORT).show()
+        })
+
         with(mViewModel){
-            dataList = list
+            dataList.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                it?.let{
+                  adapter.submitList(it)
+                }
+            })
         }
         with(mDataBinding){
             vm = mViewModel
-            lvNoteItem.apply{
-                adapter = NoteListAdapter(requireContext(),dataList)
-                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            }
+            lvNoteItem.adapter = adapter
+            lvNoteItem.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         }
 
     }

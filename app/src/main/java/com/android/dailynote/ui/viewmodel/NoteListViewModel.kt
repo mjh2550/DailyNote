@@ -1,5 +1,7 @@
 package com.android.dailynote.ui.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.android.dailynote.base.BaseViewModel
 import com.android.dailynote.data.model.entity.NoteVO
 import java.time.LocalDateTime
@@ -47,4 +49,5 @@ class NoteListViewModel : BaseViewModel(){
         null
     )
     val list = arrayListOf(testVO,testVO2,testVO3)
+    val dataList = MutableLiveData<ArrayList<NoteVO>>(list)
 }

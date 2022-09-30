@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable
+            name="noteVO"
+            type="com.android.dailynote.data.model.entity.NoteVO" />
+
+        <variable
+            name="clickListener"
+            type="com.android.dailynote.adapters.NoteListListener" />
+
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:onClick="@{() -> clickListener.onClick(noteVO)}"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -117,3 +131,4 @@
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
