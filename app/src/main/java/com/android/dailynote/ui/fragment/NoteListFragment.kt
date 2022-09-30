@@ -16,64 +16,24 @@ import com.android.dailynote.ui.viewmodel.NoteListViewModel
 import com.android.dailynote.util.Util
 import java.time.LocalDateTime
 import java.util.*
+import kotlin.collections.ArrayList
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() {
+
+    private var dataList = ArrayList<NoteVO>()
+
     override val mViewModel: NoteListViewModel by activityViewModels()
 
     override fun getLayoutRes() = R.layout.fragment_note_list
 
     override fun subscribeUi() {
         with(mViewModel){
-
+            dataList = list
         }
         with(mDataBinding){
-
-            //TODO TEST LIST
-            val dateAndtime: LocalDateTime = LocalDateTime.now()
-            val testVO = NoteVO(
-                1,
-                "testTitle",
-                "empty contents",
-                "test Writer",
-                "Y",
-                null,
-                null,
-                dateAndtime,
-                "Y",
-                null,
-                null
-            )
-            val testVO2 = NoteVO(
-                2,
-                "testTitle2",
-                "empty contents",
-                "test Writer",
-                "Y",
-                null,
-                null,
-                dateAndtime,
-                "Y",
-                null,
-                null
-            )
-            val testVO3 = NoteVO(
-                3,
-                "testTitle3",
-                "empty contents",
-                "test Writer",
-                "Y",
-                null,
-                null,
-                dateAndtime,
-                "Y",
-                null,
-                null
-            )
-            val list = arrayListOf(testVO,testVO2,testVO3)
-
-
+            vm = mViewModel
             lvNoteItem.apply{
-                adapter = NoteListAdapter(requireContext(),list)
+                adapter = NoteListAdapter(requireContext(),dataList)
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             }
         }
