@@ -3,6 +3,9 @@
 
     <string name="confirm">확인</string>
 
+    <string name="btn_cancel">취소</string>
+    <string name="btn_save">저장</string>
+
     <string name="network_retry">재시도</string>
     <string name="network_finish">종료</string>
     <string name="network_error">데이터 요청에 실패하였습니다.\n네트워크 상태를 확인해주세요.</string>

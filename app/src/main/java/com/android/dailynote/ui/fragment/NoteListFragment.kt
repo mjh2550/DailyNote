@@ -30,17 +30,16 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
 
     override fun subscribeUi() {
 
-        val adapter = NoteListAdapter(NoteListListener {
-                noteId ->
+        val adapter = NoteListAdapter(NoteListListener { noteId ->
             Toast.makeText(requireContext(),"${noteId} 탭",Toast.LENGTH_SHORT).show()
         })
 
         with(mViewModel){
-            dataList.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            dataList.observe(viewLifecycleOwner){
                 it?.let{
                   adapter.submitList(it)
                 }
-            })
+            }
         }
         with(mDataBinding){
             vm = mViewModel

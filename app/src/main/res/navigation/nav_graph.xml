@@ -11,7 +11,14 @@
     <fragment
         android:id="@+id/fragment_note_list"
         android:name="com.android.dailynote.ui.fragment.NoteListFragment"
-        android:label="NoteListFragment" />
+        android:label="NoteListFragment" >
+        <action
+            android:id="@+id/action_fragment_note_list_to_noteViewActivity"
+            app:destination="@id/noteViewActivity" />
+        <action
+            android:id="@+id/action_fragment_note_list_to_noteWriteActivity"
+            app:destination="@id/noteWriteActivity" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_profile"
         android:name="com.android.dailynote.ui.fragment.ProfileFragment"
@@ -20,4 +27,12 @@
         android:id="@+id/fragment_etc"
         android:name="com.android.dailynote.ui.fragment.EtcFragment"
         android:label="EtcFragment" />
+    <activity
+        android:id="@+id/noteViewActivity"
+        android:name="com.android.dailynote.ui.activity.NoteViewActivity"
+        android:label="NoteViewActivity" />
+    <activity
+        android:id="@+id/noteWriteActivity"
+        android:name="com.android.dailynote.ui.activity.NoteWriteActivity"
+        android:label="NoteWriteActivity" />
 </navigation>
