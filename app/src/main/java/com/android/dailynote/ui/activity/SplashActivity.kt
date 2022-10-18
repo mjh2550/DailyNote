@@ -52,6 +52,8 @@ class SplashActivity : AppCompatActivity() {
         } else {
             if (!hasPermissions(this, PERMISSIONS)) {
                 requestPermissions(PERMISSIONS, REQUEST_ALL_PERMISSION)
+            }else{
+                intentNextPage()
             }
         }
     }

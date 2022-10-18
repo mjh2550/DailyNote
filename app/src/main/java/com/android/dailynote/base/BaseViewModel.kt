@@ -1,5 +1,6 @@
 package com.android.dailynote.base
 
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.dailynote.data.model.response.ResponseResult

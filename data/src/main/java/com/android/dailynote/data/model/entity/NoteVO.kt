@@ -37,11 +37,11 @@ data class NoteVO(
 
     ///수정일
     @ColumnInfo(name = "edit_time")
-    val editTime : LocalDateTime?,
+    val editTime : String?,
 
     ///생성일
     @ColumnInfo(name = "reg_time")
-    val regTime : LocalDateTime,
+    val regTime : String,
 
     ///코멘트 여부
     @ColumnInfo(name = "comment_yn")
@@ -53,5 +53,5 @@ data class NoteVO(
 
     ///코멘트 시각
     @ColumnInfo(name = "comment_time")
-    val commentTime : LocalDateTime?,
+    val commentTime : String?,
 )

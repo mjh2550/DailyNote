@@ -23,4 +23,5 @@ class NoteViewActivity : BaseActivity<ActivityNoteViewBinding,NoteViewViewModel>
             titleBar.toolbar.title = "일기장 조회"
         }
     }
+
 }

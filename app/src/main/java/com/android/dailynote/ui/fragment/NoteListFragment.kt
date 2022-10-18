@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.android.dailynote.adapters.NoteListListener
 import com.android.dailynote.base.BaseFragment
 import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.databinding.FragmentNoteListBinding
+import com.android.dailynote.ui.activity.HomeActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
 import com.android.dailynote.util.Util
 import java.time.LocalDateTime
@@ -21,8 +23,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() {
-
-    private var dataList = ArrayList<NoteVO>()
 
     override val mViewModel: NoteListViewModel by activityViewModels()
 
@@ -53,5 +53,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
+
+//        mViewModel.insert(noteVO = )
     }
 }

@@ -1,22 +1,22 @@
 package com.android.dailynote.data.model.roomdb
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.dailynote.data.model.entity.NoteVO
 
-class NoteRepository(var application: Application,
-                     var db : NoteRoomDatabase? = NoteRoomDatabase.getDatabase(application),
-                     var noteDao: NoteDao? = db?.noteDao(),
-                     var noteVO: NoteVO? = null,
+class NoteRepository(var context: Context,
                      var noteList : LiveData<List<NoteVO>> = MutableLiveData(emptyList())){
 
-    fun getAllNoteList() : LiveData<List<NoteVO>>{
-        return noteList
-    }
+    var db =  NoteRoomDatabase.getDatabase(context)
+    var noteDao = db!!.noteDao()
 
-    fun insert(noteVO: NoteVO?){
-//        WordRoomDatabase.databaseWriteExecutor.execute { mWordDao.insert(word) }
+    fun getAllNoteList() = noteList
 
+    fun insert(noteVO: NoteVO){
+          NoteRoomDatabase.databaseWriteExecutor.execute{
+              noteDao!!.insert(noteVO)
+          }
     }
 }
