@@ -14,11 +14,11 @@ import java.util.concurrent.Executors
     NoteVO::class
                ],
     version = 1)
-abstract class NoteRoomDatabase :RoomDatabase() {
+abstract class NoteRoomDatabase : RoomDatabase() {
 
     abstract fun noteDao() : NoteDao
 
-    companion object{
+   /* companion object{
         const val NUMBER_OF_THREADS = 4
         val databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS)
         private var INSTANCE : NoteRoomDatabase? = null
@@ -38,10 +38,10 @@ abstract class NoteRoomDatabase :RoomDatabase() {
         fun destroyInstance(){
             INSTANCE = null
         }
-        /**
+        *//**
          * Override the onCreate method to populate the database.
          * For this sample, we clear the database every time it is created.
-         */
+         *//*
         private val sRoomDatabaseCallback: Callback = object : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
@@ -50,7 +50,7 @@ abstract class NoteRoomDatabase :RoomDatabase() {
                     // Populate the database in the background.
                     // If you want to start with more words, just add them.
 
-                   /* val dao = INSTANCE?.noteDao()
+                   *//* val dao = INSTANCE?.noteDao()
                     dao?.deleteAll()
                     val today = Date(System.currentTimeMillis()).toString()
                     val testVO = NoteVO(
@@ -66,12 +66,12 @@ abstract class NoteRoomDatabase :RoomDatabase() {
                         null,
                         null
                     )
-                    dao?.insert(testVO)*/
+                    dao?.insert(testVO)*//*
                 }
             }
         }
 
-    }
+    }*/
 
 
 }

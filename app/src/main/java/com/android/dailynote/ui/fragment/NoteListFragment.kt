@@ -1,9 +1,12 @@
 package com.android.dailynote.ui.fragment
 
+import android.app.Application
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -14,6 +17,7 @@ import com.android.dailynote.adapters.NoteListAdapter
 import com.android.dailynote.adapters.NoteListListener
 import com.android.dailynote.base.BaseFragment
 import com.android.dailynote.data.model.entity.NoteVO
+import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.databinding.FragmentNoteListBinding
 import com.android.dailynote.ui.activity.HomeActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
@@ -24,7 +28,13 @@ import kotlin.collections.ArrayList
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() {
 
-    override val mViewModel: NoteListViewModel by activityViewModels()
+    override val mViewModel: NoteListViewModel by lazy {
+        ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return  NoteListViewModel(repository = NoteRepository(applicationContext = context!!) ) as T
+            }
+        })[NoteListViewModel::class.java]
+    }
 
     override fun getLayoutRes() = R.layout.fragment_note_list
 

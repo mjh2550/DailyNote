@@ -1,5 +1,6 @@
 package com.android.dailynote.ui.activity
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels

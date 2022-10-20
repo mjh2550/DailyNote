@@ -2,9 +2,7 @@ package com.android.dailynote.ui.viewmodel
 
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.android.dailynote.BuildConfig
 import com.android.dailynote.R
 import com.android.dailynote.base.BaseApplication
@@ -20,62 +18,50 @@ import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class NoteListViewModel : BaseViewModel() {
+class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel() {
 
-//    companion object{
-        private val FIREBASE_DB_URL = BuildConfig.FIREBASE_URL
-        private val database = Firebase.database(FIREBASE_DB_URL)
-        private val myRef = database.getReference("daily_note")
-//        val repository = NoteRepository(activity)
-//    }
+    private val FIREBASE_DB_URL = BuildConfig.FIREBASE_URL
+    private val database = Firebase.database(FIREBASE_DB_URL)
+    private val myRef = database.getReference("daily_note")
+    var dataList1 = arrayListOf<NoteVO>()
 
-    //TODO TEST LIST
-    val today = Date(System.currentTimeMillis()).toString()
-    //    val testVO = NoteVO(
-//        1,
-//        "testTitle",
-//        "empty contents",
-//        "test Writer",
-//        "Y",
-//        null,
-//        null,
-//        today,
-//        "Y",
-//        null,
-//        null
-//    )
-    val testVO2 = NoteVO(
-        2,
-        "testTitle2",
-        "empty contents",
-        "test Writer",
-        "Y",
-        null,
-        null,
-        today,
-        "Y",
-        null,
-        null
-    )
-    val testVO3 = NoteVO(
-        3,
-        "testTitle3",
-        "empty contents",
-        "test Writer",
-        "Y",
-        null,
-        null,
-        today,
-        "Y",
-        null,
-        null
-    )
-    val list = arrayListOf(testVO2,testVO3)
-    val dataList = MutableLiveData(list)
-//        repository.getAllNoteList()
+    init {
+        //TODO TEST LIST
+        val today = Date(System.currentTimeMillis()).toString()
+        val testVO2 = NoteVO(
+            2,
+            "testTitle2",
+            "empty contents",
+            "test Writer",
+            "Y",
+            null,
+            null,
+            today,
+            "Y",
+            null,
+            null
+        )
+        val testVO3 = NoteVO(
+            3,
+            "testTitle3",
+            "empty contents",
+            "test Writer",
+            "Y",
+            null,
+            null,
+            today,
+            "Y",
+            null,
+            null
+        )
+        dataList1.add(testVO2)
+        dataList1.add(testVO3)
 
-//    fun insert(noteVO: NoteVO) = repository.insert(noteVO)
+//        repository.insertData(testVO2)
+//        repository.insertData(testVO3)
+    }
 
+    val dataList = repository.getAllNoteList()
 
     fun click() {
         println("OK")

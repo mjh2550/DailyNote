@@ -1,22 +1,29 @@
 package com.android.dailynote.data.model.roomdb
 
-import android.app.Application
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.room.Room
 import com.android.dailynote.data.model.entity.NoteVO
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class NoteRepository(var context: Context,
-                     var noteList : LiveData<List<NoteVO>> = MutableLiveData(emptyList())){
+class NoteRepository(applicationContext : Context){
 
-    var db =  NoteRoomDatabase.getDatabase(context)
-    var noteDao = db!!.noteDao()
+    private val db = Room.databaseBuilder(
+        applicationContext,
+        NoteRoomDatabase::class.java, "note_db"
+    ).build()
 
-    fun getAllNoteList() = noteList
+//    var noteDao = db.noteDao()
+    fun getAllNoteList() = db.noteDao().getAllNoteList()
 
-    fun insert(noteVO: NoteVO){
-          NoteRoomDatabase.databaseWriteExecutor.execute{
-              noteDao!!.insert(noteVO)
-          }
+    fun insertData(noteVO: NoteVO) {
+        CoroutineScope(Dispatchers.IO).launch {
+            db.noteDao().insert(noteVO = noteVO)
+        }
     }
+
+    fun deleteAll() = db.noteDao().deleteAll()
+
+    fun deleteById(noteId:Int) = db.noteDao().deleteById(noteId = noteId)
 }

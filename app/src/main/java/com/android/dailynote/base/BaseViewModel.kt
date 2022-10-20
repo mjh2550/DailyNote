@@ -7,7 +7,7 @@ import com.android.dailynote.data.model.response.ResponseResult
 /**
  * Created by KimBH on 2022/07/12.
  */
-abstract class BaseViewModel : ViewModel(), BaseContractViewModel {
+abstract class BaseViewModel() : ViewModel(), BaseContractViewModel {
     var isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     var resReuslt: MutableLiveData<ResponseResult> = MutableLiveData()
     var error: MutableLiveData<Throwable> = MutableLiveData()
