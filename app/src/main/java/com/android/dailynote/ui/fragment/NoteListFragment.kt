@@ -1,8 +1,11 @@
 package com.android.dailynote.ui.fragment
 
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -20,13 +23,14 @@ import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.databinding.FragmentNoteListBinding
 import com.android.dailynote.ui.activity.HomeActivity
+import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
 import com.android.dailynote.util.Util
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() {
+class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener{
 
     override val mViewModel: NoteListViewModel by lazy {
         ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
@@ -55,15 +59,29 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             vm = mViewModel
             lvNoteItem.adapter = adapter
             lvNoteItem.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            btnAdd.setOnClickListener(this@NoteListFragment)
         }
 
     }
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-
-//        mViewModel.insert(noteVO = )
     }
+
+    override fun onClick(p0: View?) {
+        when(p0?.id){
+            R.id.btn_add -> onClickFloatingButton()
+        }
+    }
+
+    private fun onClickFloatingButton (){
+        Log.d("onclick","floating btn")
+        val intent = Intent(requireActivity(),NoteWriteActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+
+
 }

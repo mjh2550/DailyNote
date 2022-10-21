@@ -2,6 +2,7 @@ package com.android.dailynote.ui.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.*
 import com.android.dailynote.BuildConfig
 import com.android.dailynote.R
