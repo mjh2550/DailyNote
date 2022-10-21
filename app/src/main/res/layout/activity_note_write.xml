@@ -51,6 +51,7 @@
                 android:id="@+id/edt_note_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={vm.edtTitleText}"
                 android:hint="type title" />
 
             <EditText
@@ -59,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:gravity="start|top"
+                android:text="@={vm.edtContentsText}"
                 android:hint="type contents"
                 android:inputType="textMultiLine" />
 

@@ -24,7 +24,7 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     private val FIREBASE_DB_URL = BuildConfig.FIREBASE_URL
     private val database = Firebase.database(FIREBASE_DB_URL)
     private val myRef = database.getReference("daily_note")
-    var dataList1 = arrayListOf<NoteVO>()
+//    var dataList1 = MutableLiveData<NoteVO>()
 
     init {
         //TODO TEST LIST
@@ -55,14 +55,19 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
             null,
             null
         )
-        dataList1.add(testVO2)
-        dataList1.add(testVO3)
+
 
 //        repository.insertData(testVO2)
 //        repository.insertData(testVO3)
     }
 
     val dataList = repository.getAllNoteList()
+
+    fun insertData(noteVO: NoteVO) = repository.insertData(noteVO)
+
+    fun deleteAll() = repository.deleteAll()
+
+    fun deleteById(noteId: Int) = repository.deleteById(noteId)
 
     fun click() {
         println("OK")

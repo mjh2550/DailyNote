@@ -1,5 +1,6 @@
 package com.android.dailynote.ui.fragment
 
+import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +8,8 @@ import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -38,6 +41,31 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 return  NoteListViewModel(repository = NoteRepository(applicationContext = context!!) ) as T
             }
         })[NoteListViewModel::class.java]
+    }
+
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        println("resultCode ${it.resultCode}")
+        if(it.resultCode == Activity.RESULT_OK){
+            val title = it.data?.getStringExtra("title")
+            val contents = it.data?.getStringExtra("contents")
+
+            val today = Date(System.currentTimeMillis()).toString()
+            mViewModel.insertData(NoteVO(
+                5,
+                title!!,
+                contents!!,
+                "test Writer",
+                "Y",
+                null,
+                null,
+                today,
+                "Y",
+                null,
+                null
+            ))
+
+
+        }
     }
 
     override fun getLayoutRes() = R.layout.fragment_note_list
@@ -77,11 +105,11 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     }
 
     private fun onClickFloatingButton (){
-        Log.d("onclick","floating btn")
-        val intent = Intent(requireActivity(),NoteWriteActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-    }
 
+        val intent = Intent(requireActivity(),NoteWriteActivity::class.java)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//        startActivity(intent)
+        startForResult.launch(intent)
+    }
 
 }

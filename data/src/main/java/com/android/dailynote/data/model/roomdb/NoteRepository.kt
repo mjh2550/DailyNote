@@ -1,6 +1,7 @@
 package com.android.dailynote.data.model.roomdb
 
 import android.content.Context
+import androidx.annotation.WorkerThread
 import androidx.room.Room
 import com.android.dailynote.data.model.entity.NoteVO
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +15,6 @@ class NoteRepository(applicationContext : Context){
         NoteRoomDatabase::class.java, "note_db"
     ).build()
 
-//    var noteDao = db.noteDao()
     fun getAllNoteList() = db.noteDao().getAllNoteList()
 
     fun insertData(noteVO: NoteVO) {
