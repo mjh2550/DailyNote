@@ -51,7 +51,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
 
             val today = Date(System.currentTimeMillis()).toString()
             mViewModel.insertData(NoteVO(
-                5,
+                null,
                 title!!,
                 contents!!,
                 "test Writer",

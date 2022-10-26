@@ -10,10 +10,10 @@ import javax.annotation.Nonnull
 @Entity(tableName = "note_table")
 data class NoteVO(
     ///id
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @Nonnull
     @ColumnInfo(name = "note_id")
-    val noteId : Long,
+    val noteId : Long?,
 
     ///제목
     @ColumnInfo(name = "note_title")
@@ -54,4 +54,29 @@ data class NoteVO(
     ///코멘트 시각
     @ColumnInfo(name = "comment_time")
     val commentTime : String?,
-)
+){
+    constructor(noteTitle: String,
+                noteContents: String,
+                noteWriter: String,
+                attachYN: String,
+                attachPath: String? = null,
+                editTime: String? = null,
+                regTime: String ,
+                commentYN: String ,
+                commentContents: String? = null,
+                commentTime: String? = null
+                ) :
+            this(null,
+                noteTitle,
+                noteContents,
+                noteWriter,
+                attachYN,
+                attachPath,
+                editTime,
+                regTime,
+                commentYN,
+                commentContents,
+                commentTime
+            )
+
+}
