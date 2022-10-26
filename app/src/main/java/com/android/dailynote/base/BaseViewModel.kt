@@ -1,6 +1,5 @@
 package com.android.dailynote.base
 
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.dailynote.data.model.response.ResponseResult
@@ -9,13 +8,13 @@ import com.android.dailynote.data.model.response.ResponseResult
  */
 abstract class BaseViewModel() : ViewModel(), BaseContractViewModel {
     var isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
-    var resReuslt: MutableLiveData<ResponseResult> = MutableLiveData()
+    var resResult: MutableLiveData<ResponseResult> = MutableLiveData()
     var error: MutableLiveData<Throwable> = MutableLiveData()
 
     override fun observeResultCode(resResult: ResponseResult?) {
         isLoading.postValue(false)
         resResult?.let {
-            resReuslt.postValue(it)
+            this.resResult.postValue(it)
         }
     }
 

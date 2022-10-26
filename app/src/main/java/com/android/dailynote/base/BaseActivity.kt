@@ -40,7 +40,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel>  : AppComp
                 }
             }
 
-            resReuslt.observe(this@BaseActivity) {
+            resResult.observe(this@BaseActivity) {
                 loadResultCode(it)
             }
 
