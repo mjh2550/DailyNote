@@ -1,17 +1,12 @@
 package com.android.dailynote.ui.fragment
 
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -24,14 +19,12 @@ import com.android.dailynote.adapters.NoteListListener
 import com.android.dailynote.base.BaseFragment
 import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.data.model.roomdb.NoteRepository
+import com.android.dailynote.data.network.util.ErrorUtil
 import com.android.dailynote.databinding.FragmentNoteListBinding
 import com.android.dailynote.ui.activity.HomeActivity
 import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
-import com.android.dailynote.util.Util
-import java.time.LocalDateTime
 import java.util.*
-import kotlin.collections.ArrayList
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener{
 
@@ -44,12 +37,21 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     }
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        println("resultCode ${it.resultCode}")
         if(it.resultCode == Activity.RESULT_OK){
             val title = it.data?.getStringExtra("title")
             val contents = it.data?.getStringExtra("contents")
 
-            val today = Date(System.currentTimeMillis()).toString()
+            //val now = Date(System.currentTimeMillis()).toString()
+            val c = Calendar.getInstance()
+            val mYear = c[Calendar.YEAR]
+            val mMonth = c[Calendar.MONTH]
+            val mDay = c[Calendar.DAY_OF_MONTH]
+            val mHour = c[Calendar.HOUR]
+            val mMinute = c[Calendar.MINUTE]
+            val mSecond = c[Calendar.SECOND]
+            val day = "$mYear/$mMonth/$mDay"
+            val time = "$mHour:$mMinute:$mSecond"
+            val today = "$day $time"
             mViewModel.insertData(NoteVO(
                 null,
                 title!!,
@@ -64,7 +66,10 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 null
             ))
 
-
+        } else {
+            ErrorUtil.showErrorMessage(requireActivity(),getString(R.string.msg_save_fail)) {
+                //callback code
+            }
         }
     }
 
@@ -105,7 +110,6 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     }
 
     private fun onClickFloatingButton (){
-
         val intent = Intent(requireActivity(),NoteWriteActivity::class.java)
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 //        startActivity(intent)
