@@ -24,6 +24,7 @@ import com.android.dailynote.databinding.FragmentNoteListBinding
 import com.android.dailynote.ui.activity.HomeActivity
 import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
+import java.lang.Math.abs
 import java.util.*
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener{
@@ -73,6 +74,20 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         }
     }
 
+    /**
+     * //TODO
+     * 0.일기장 목록 CRUD 기능
+        일기장 상단 필터링,검색 기능
+
+        1.로그인 기능
+
+        2.일기장 홈
+        캘린더 , 커플
+
+        내 정보 , 커플 설정
+
+     */
+
     override fun getLayoutRes() = R.layout.fragment_note_list
 
     override fun subscribeUi() {
@@ -93,7 +108,21 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             lvNoteItem.adapter = adapter
             lvNoteItem.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             btnAdd.setOnClickListener(this@NoteListFragment)
+            btnToDate.setOnClickListener(this@NoteListFragment)
+            btnFromDate.setOnClickListener(this@NoteListFragment)
+            btnSearch.setOnClickListener(this@NoteListFragment)
+
+            val c = Calendar.getInstance()
+            val mYear = c[Calendar.YEAR]
+            val mMonth = c[Calendar.MONTH]
+            val mDay = c[Calendar.DAY_OF_MONTH]
+            val recentMonth = 1
+            val toDate = "$mYear/${if(mMonth-recentMonth<=0) kotlin.math.abs(mMonth - 1)+1 else {mMonth-1}}/$mDay"
+            val fromDate = "$mYear/$mMonth/$mDay"
+            btnToDate.text = toDate
+            btnFromDate.text = fromDate
         }
+        //initBtnDateSet()
 
     }
     private lateinit var navController: NavController
@@ -114,6 +143,12 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 //        startActivity(intent)
         startForResult.launch(intent)
+    }
+
+    fun initBtnDateSet() {
+        //TODO 시작 시 현재날짜 세팅
+        // TO_DATE : 지정된 날짜가 없으면 현재 날짜 -1개월
+        // FROM_DATE : 지정된 날짜가 없으면 현재 날짜
     }
 
 }

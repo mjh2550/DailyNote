@@ -15,9 +15,7 @@ import com.android.dailynote.ui.activity.HomeActivity
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.time.LocalDateTime
-import java.util.*
-import kotlin.collections.ArrayList
+
 
 class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel() {
 
@@ -25,41 +23,6 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     private val database = Firebase.database(FIREBASE_DB_URL)
     private val myRef = database.getReference("daily_note")
 //    var dataList1 = MutableLiveData<NoteVO>()
-
-    init {
-        //TODO TEST LIST
-        val today = Date(System.currentTimeMillis()).toString()
-        val testVO2 = NoteVO(
-            2,
-            "testTitle2",
-            "empty contents",
-            "test Writer",
-            "Y",
-            null,
-            null,
-            today,
-            "Y",
-            null,
-            null
-        )
-        val testVO3 = NoteVO(
-            3,
-            "testTitle3",
-            "empty contents",
-            "test Writer",
-            "Y",
-            null,
-            null,
-            today,
-            "Y",
-            null,
-            null
-        )
-
-
-//        repository.insertData(testVO2)
-//        repository.insertData(testVO3)
-    }
 
     val dataList = repository.getAllNoteList()
 
@@ -72,5 +35,16 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     fun click() {
         println("OK")
     }
+
+    fun clickBtnDate(){
+        //TODO 날짜 세팅 버튼 클릭 시 이벤트
+        // 달력 출력 후 클릭한 연월일을 YY/MM/DD 로 버튼 텍스트 출력
+    }
+
+    fun clickBtnSearch(){
+        //TODO
+    }
+
+
 
 }
