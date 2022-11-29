@@ -32,6 +32,7 @@ class NoteListAdapter(private val clickListener: NoteListListener)
            binding.tvNoteWriter.text = item.noteWriter
            binding.tvNoteAttachYN.text = item.attachYN
            binding.tvNoteCommentYN.text = item.commentYN
+           binding.cbCheck.isChecked = false
            binding.noteVO = item
            binding.clickListener = clickListener
        }

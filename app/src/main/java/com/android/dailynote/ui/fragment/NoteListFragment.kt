@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModel
@@ -24,8 +25,8 @@ import com.android.dailynote.databinding.FragmentNoteListBinding
 import com.android.dailynote.ui.activity.HomeActivity
 import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
-import java.lang.Math.abs
 import java.util.*
+import kotlin.collections.HashSet
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener{
 
@@ -90,16 +91,18 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
 
     override fun getLayoutRes() = R.layout.fragment_note_list
 
+    private var adapter : NoteListAdapter? = null
+
     override fun subscribeUi() {
 
-        val adapter = NoteListAdapter(NoteListListener { noteId ->
+        adapter = NoteListAdapter(NoteListListener { noteId ->
             Toast.makeText(requireContext(),"${noteId} 탭",Toast.LENGTH_SHORT).show()
         })
 
         with(mViewModel){
             dataList.observe(viewLifecycleOwner){
                 it?.let{
-                  adapter.submitList(it)
+                  adapter!!.submitList(it)
                 }
             }
         }
@@ -111,18 +114,18 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             btnToDate.setOnClickListener(this@NoteListFragment)
             btnFromDate.setOnClickListener(this@NoteListFragment)
             btnSearch.setOnClickListener(this@NoteListFragment)
+            cbAllCheck.setOnClickListener(this@NoteListFragment)
 
             val c = Calendar.getInstance()
             val mYear = c[Calendar.YEAR]
             val mMonth = c[Calendar.MONTH]
             val mDay = c[Calendar.DAY_OF_MONTH]
             val recentMonth = 1
-            val toDate = "$mYear/${if(mMonth-recentMonth<=0) kotlin.math.abs(mMonth - 1)+1 else {mMonth-1}}/$mDay"
+            val toDate = "$mYear/${if(mMonth-recentMonth<=0) kotlin.math.abs(mMonth - recentMonth)+1 else {mMonth-recentMonth}}/$mDay"
             val fromDate = "$mYear/$mMonth/$mDay"
             btnToDate.text = toDate
             btnFromDate.text = fromDate
         }
-        //initBtnDateSet()
 
     }
     private lateinit var navController: NavController
@@ -135,6 +138,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.btn_add -> onClickFloatingButton()
+            R.id.cb_all_check -> onCheckBoxClicked(p0)
         }
     }
 
@@ -145,10 +149,21 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         startForResult.launch(intent)
     }
 
-    fun initBtnDateSet() {
-        //TODO 시작 시 현재날짜 세팅
-        // TO_DATE : 지정된 날짜가 없으면 현재 날짜 -1개월
-        // FROM_DATE : 지정된 날짜가 없으면 현재 날짜
+    fun onCheckBoxClicked(view : View){
+        if (view is CheckBox){
+            val checked : Boolean = view.isChecked
+            when (view.id){
+                //전체 체크 박스 클릭 시
+                R.id.cb_all_check -> {
+
+                }
+                //항목 체크박스 클릭 시
+                R.id.cb_check -> {
+
+                }
+            }
+        }
     }
+
 
 }

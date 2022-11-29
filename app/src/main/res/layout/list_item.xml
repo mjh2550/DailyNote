@@ -31,6 +31,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <CheckBox
+            android:id="@+id/cb_check"
+            android:layout_weight="0.1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
         <TextView
             android:id="@+id/tv_note_id"
             android:layout_width="0dp"
@@ -46,7 +52,7 @@
             android:id="@+id/tv_note_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_weight="0.5"
             android:fontFamily="@font/bmdh"
             android:gravity="center"
             android:hint="title"

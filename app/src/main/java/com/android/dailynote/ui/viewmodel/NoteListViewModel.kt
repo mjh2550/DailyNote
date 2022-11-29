@@ -46,5 +46,4 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     }
 
 
-
 }
