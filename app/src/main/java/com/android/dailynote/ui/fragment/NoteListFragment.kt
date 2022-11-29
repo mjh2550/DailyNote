@@ -15,6 +15,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.dailynote.R
+import com.android.dailynote.adapters.EventType
 import com.android.dailynote.adapters.NoteListAdapter
 import com.android.dailynote.adapters.NoteListListener
 import com.android.dailynote.base.BaseFragment
@@ -65,7 +66,8 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 today,
                 "Y",
                 null,
-                null
+                null,
+                false,
             ))
 
         } else {
@@ -93,8 +95,19 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
 
     override fun subscribeUi() {
 
-        val adapter = NoteListAdapter(NoteListListener { noteId ->
-            Toast.makeText(requireContext(),"${noteId} 탭",Toast.LENGTH_SHORT).show()
+        val adapter = NoteListAdapter(NoteListListener { noteId , eventType ->
+
+            when(eventType){
+                EventType.ON_BUTTON_CLICK -> {
+                     Toast.makeText(requireContext(),"ON_BUTTON_CLICK",Toast.LENGTH_SHORT).show()
+                }
+                EventType.ON_CHECKBOX_CHANGED -> {
+                    Toast.makeText(requireContext(),"ON_CHECKBOX_CHANGED",Toast.LENGTH_SHORT).show()
+                }
+                EventType.ON_RADIOBUTTON_CLICK -> {
+                    Toast.makeText(requireContext(),"ON_RADIOBUTTON_CLICK",Toast.LENGTH_SHORT).show()
+                }
+            }
         })
 
         with(mViewModel){

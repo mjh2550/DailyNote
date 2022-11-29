@@ -60,6 +60,7 @@ class NoteListDiffCallback : DiffUtil.ItemCallback<NoteVO>(){
 
 }
 
-class NoteListListener(val clickListener : (noteId: Long) -> Unit){
-    fun onClick(noteVO: NoteVO) = clickListener(noteVO.noteId!!)
+class NoteListListener(val clickListener : (noteId: Long,EventType) -> Unit){
+    fun onClick(noteVO: NoteVO) = clickListener(noteVO.noteId!!,EventType.ON_BUTTON_CLICK)
+    fun onClickCheckBoxChanged(noteVO: NoteVO) = clickListener(noteVO.noteId!!,EventType.ON_CHECKBOX_CHANGED)
 }

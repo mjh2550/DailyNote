@@ -54,6 +54,10 @@ data class NoteVO(
     ///코멘트 시각
     @ColumnInfo(name = "comment_time")
     val commentTime : String?,
+
+    ///리스트 체크여부
+    @ColumnInfo(name = "isChecked")
+    var isChecked : Boolean
 ){
     constructor(noteTitle: String,
                 noteContents: String,
@@ -64,7 +68,8 @@ data class NoteVO(
                 regTime: String ,
                 commentYN: String ,
                 commentContents: String? = null,
-                commentTime: String? = null
+                commentTime: String? = null,
+                isChecked: Boolean = false,
                 ) :
             this(null,
                 noteTitle,
@@ -76,7 +81,8 @@ data class NoteVO(
                 regTime,
                 commentYN,
                 commentContents,
-                commentTime
+                commentTime,
+                isChecked,
             )
 
 }

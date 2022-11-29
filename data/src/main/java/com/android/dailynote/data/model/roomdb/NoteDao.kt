@@ -8,7 +8,7 @@ import retrofit2.http.DELETE
 @Dao
 interface NoteDao {
 
-    @Query("SELECT * FROM note_table ORDER BY reg_time DESC")
+    @Query("SELECT * FROM note_table ORDER BY note_id ASC")
     fun getAllNoteList() : LiveData<List<NoteVO>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
