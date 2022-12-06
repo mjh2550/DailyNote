@@ -29,6 +29,7 @@
             android:id="@+id/cb_all_check"
             android:layout_weight="0.1"
             android:layout_width="0dp"
+            android:onClick="@{()-> vm.onCheckBoxChanged()}"
             android:layout_height="match_parent"/>
 
         <!-- 날짜 , 검색어 , 검색 버튼 -->

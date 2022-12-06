@@ -3,6 +3,7 @@ package com.android.dailynote.ui.viewmodel
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.android.dailynote.BuildConfig
 import com.android.dailynote.R
@@ -45,5 +46,13 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         //TODO
     }
 
-
+    fun onCheckBoxChanged(){
+        if(dataList.value != null && dataList.value!!.isNotEmpty()) {
+            for (noteVO in dataList.value!!) {
+                println("${noteVO.isChecked}")
+                noteVO.isChecked = !noteVO.isChecked
+            }
+        }
+        //TODO 데이터는 잘 변경되나, UI 업데이트가 되지 않음
+    }
 }

@@ -95,14 +95,13 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
 
     override fun subscribeUi() {
 
-        val adapter = NoteListAdapter(NoteListListener { noteId , eventType ->
-
+        val adapter = NoteListAdapter(NoteListListener { noteVO , eventType ->
             when(eventType){
                 EventType.ON_BUTTON_CLICK -> {
                      Toast.makeText(requireContext(),"ON_BUTTON_CLICK",Toast.LENGTH_SHORT).show()
                 }
                 EventType.ON_CHECKBOX_CHANGED -> {
-                    Toast.makeText(requireContext(),"ON_CHECKBOX_CHANGED",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),"ON_CHECKBOX_CHANGED_${noteVO.isChecked}",Toast.LENGTH_SHORT).show()
                 }
                 EventType.ON_RADIOBUTTON_CLICK -> {
                     Toast.makeText(requireContext(),"ON_RADIOBUTTON_CLICK",Toast.LENGTH_SHORT).show()

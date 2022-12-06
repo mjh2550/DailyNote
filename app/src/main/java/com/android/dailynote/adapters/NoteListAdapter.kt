@@ -32,7 +32,7 @@ class NoteListAdapter(private val clickListener: NoteListListener)
            binding.tvNoteWriter.text = item.noteWriter
            binding.tvNoteAttachYN.text = item.attachYN
            binding.tvNoteCommentYN.text = item.commentYN
-           binding.cbCheck.isChecked = false
+           binding.cbCheck.isChecked = item.isChecked
            binding.noteVO = item
            binding.clickListener = clickListener
        }
@@ -60,7 +60,10 @@ class NoteListDiffCallback : DiffUtil.ItemCallback<NoteVO>(){
 
 }
 
-class NoteListListener(val clickListener : (noteId: Long,EventType) -> Unit){
-    fun onClick(noteVO: NoteVO) = clickListener(noteVO.noteId!!,EventType.ON_BUTTON_CLICK)
-    fun onClickCheckBoxChanged(noteVO: NoteVO) = clickListener(noteVO.noteId!!,EventType.ON_CHECKBOX_CHANGED)
+class NoteListListener(val clickListener : (noteVO:NoteVO,EventType) -> Unit){
+    fun onClick(noteVO: NoteVO) = clickListener(noteVO,EventType.ON_BUTTON_CLICK)
+    fun onClickCheckBoxChanged(noteVO: NoteVO) {
+        noteVO.isChecked = !noteVO.isChecked
+        clickListener(noteVO, EventType.ON_CHECKBOX_CHANGED)
+    }
 }
