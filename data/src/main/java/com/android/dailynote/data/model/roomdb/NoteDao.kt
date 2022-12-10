@@ -1,6 +1,7 @@
 package com.android.dailynote.data.model.roomdb
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.android.dailynote.data.model.entity.NoteVO
 import retrofit2.http.DELETE

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.android.dailynote.R
@@ -65,5 +66,8 @@ class NoteListListener(val clickListener : (noteVO:NoteVO,EventType) -> Unit){
     fun onClickCheckBoxChanged(noteVO: NoteVO) {
         noteVO.isChecked = !noteVO.isChecked
         clickListener(noteVO, EventType.ON_CHECKBOX_CHANGED)
+    }
+    fun onClickAllCheckBoxChanged() {
+        println("testtest")
     }
 }

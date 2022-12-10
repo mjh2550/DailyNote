@@ -46,13 +46,12 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         //TODO
     }
 
-    fun onCheckBoxChanged(){
+    fun onCheckBoxChanged(isChecked : Boolean){
         if(dataList.value != null && dataList.value!!.isNotEmpty()) {
-            for (noteVO in dataList.value!!) {
-                println("${noteVO.isChecked}")
-                noteVO.isChecked = !noteVO.isChecked
+            for (listNoteVo in dataList.value!!) {
+                println("$isChecked")
+                listNoteVo.isChecked = isChecked
             }
         }
-        //TODO 데이터는 잘 변경되나, UI 업데이트가 되지 않음
     }
 }

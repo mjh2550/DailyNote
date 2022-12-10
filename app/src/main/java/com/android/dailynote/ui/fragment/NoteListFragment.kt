@@ -1,11 +1,13 @@
 package com.android.dailynote.ui.fragment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModel
@@ -29,7 +31,7 @@ import com.android.dailynote.ui.viewmodel.NoteListViewModel
 import java.util.*
 import kotlin.collections.HashSet
 
-class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener{
+class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener , CompoundButton.OnCheckedChangeListener{
 
     override val mViewModel: NoteListViewModel by lazy {
         ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
@@ -124,7 +126,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             btnToDate.setOnClickListener(this@NoteListFragment)
             btnFromDate.setOnClickListener(this@NoteListFragment)
             btnSearch.setOnClickListener(this@NoteListFragment)
-            cbAllCheck.setOnClickListener(this@NoteListFragment)
+            cbAllCheck.setOnCheckedChangeListener(this@NoteListFragment)
 
             val c = Calendar.getInstance()
             val mYear = c[Calendar.YEAR]
@@ -148,7 +150,6 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.btn_add -> onClickFloatingButton()
-            R.id.cb_all_check -> onCheckBoxClicked(p0)
         }
     }
 
@@ -159,20 +160,16 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         startForResult.launch(intent)
     }
 
-    fun onCheckBoxClicked(view : View){
-        if (view is CheckBox){
-            val checked : Boolean = view.isChecked
-            when (view.id){
-                //전체 체크 박스 클릭 시
-                R.id.cb_all_check -> {
-
-                }
-                //항목 체크박스 클릭 시
-                R.id.cb_check -> {
-
-                }
-            }
-        }
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onCheckedChanged(cBtn: CompoundButton?, isChecked: Boolean) {
+       when (cBtn?.id){
+           //전체 체크 박스 클릭 시
+           R.id.cb_all_check -> {
+               mDataBinding.vm?.onCheckBoxChanged(isChecked)
+               //UI Update
+               mDataBinding.lvNoteItem.adapter?.notifyDataSetChanged()
+           }
+       }
     }
 
 
