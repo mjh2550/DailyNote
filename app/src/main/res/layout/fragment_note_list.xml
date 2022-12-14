@@ -6,9 +6,7 @@
         <variable
             name="vm"
             type="com.android.dailynote.ui.viewmodel.NoteListViewModel" />
-        <variable
-            name="clickListener"
-            type="com.android.dailynote.adapters.NoteListListener" />
+
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

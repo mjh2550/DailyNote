@@ -6,11 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
-import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isGone
+import androidx.core.view.iterator
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -26,11 +26,9 @@ import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.data.network.util.ErrorUtil
 import com.android.dailynote.databinding.FragmentNoteListBinding
-import com.android.dailynote.ui.activity.HomeActivity
 import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
 import java.util.*
-import kotlin.collections.HashSet
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener , CompoundButton.OnCheckedChangeListener{
 
@@ -99,16 +97,22 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
 
     override fun getLayoutRes() = R.layout.fragment_note_list
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun subscribeUi() {
 
         val adapter = NoteListAdapter(
-            NoteListListener { v , eventType ->
+            NoteListListener { cb , isChecked,noteVO, eventType ->
                 when(eventType){
                     EventType.ON_BUTTON_CLICK -> {
-                         Toast.makeText(requireContext(),"ON_BUTTON_CLICK",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),"ON_BUTTON_CLICK",Toast.LENGTH_SHORT).show()
                     }
                     EventType.ON_CHECKBOX_CHANGED -> {
-                        Toast.makeText(requireContext(),"ON_CHECKBOX_CHANGED",Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(requireContext(),"ON_CHECKBOX_CHANGED",Toast.LENGTH_SHORT).show()
+                        for(listVo in mViewModel.dataList.value!!){
+                            if(noteVO?.noteId == listVo.noteId){
+                                listVo.isChecked = isChecked!!
+                            }
+                        }
                     }
                     EventType.ON_RADIOBUTTON_CLICK -> {
                         Toast.makeText(requireContext(),"ON_RADIOBUTTON_CLICK",Toast.LENGTH_SHORT).show()
@@ -134,7 +138,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             btnToDate.setOnClickListener(this@NoteListFragment)
             btnFromDate.setOnClickListener(this@NoteListFragment)
             btnSearch.setOnClickListener(this@NoteListFragment)
-//            cbAllCheck.setOnCheckedChangeListener(this@NoteListFragment)
+            cbAllCheck.setOnCheckedChangeListener(this@NoteListFragment)
 
             val c = Calendar.getInstance()
             val mYear = c[Calendar.YEAR]
@@ -172,13 +176,13 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 startForResult.launch(intent)
             }
             R.id.btn_del-> {
-                //TODO 삭제 버튼 클릭 시
-                // 현재 체크되어있는 리스트의 id를 조사하여 리스트를 만들고, Delete에 리스트를 넘김
-//                mDataBinding.vm.deleteList
-                println("${mViewModel.dataList.value!!.size}")
+                val list = emptyList<NoteVO>()
                 for (noteVo in mViewModel.dataList.value!!){
-                    println("ischecked : ${noteVo.isChecked}")
+                    if(noteVo.isChecked) {
+                        list.plus(noteVo)
+                    }
                 }
+                mViewModel.deleteList = list
             }
             R.id.btn_more -> {
                 val isBtnGone = mDataBinding.btnAdd.isGone
@@ -203,7 +207,8 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
        when (cBtn?.id){
            //전체 체크 박스 클릭 시
            R.id.cb_all_check -> {
-               mDataBinding.vm?.onCheckBoxChanged(isChecked)
+               //Data Update
+               mDataBinding.vm?.onCheckBoxAllChanged(isChecked)
                //UI Update
                mDataBinding.lvNoteItem.adapter?.notifyDataSetChanged()
            }

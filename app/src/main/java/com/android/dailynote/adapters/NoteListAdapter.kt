@@ -59,21 +59,5 @@ class NoteListDiffCallback : DiffUtil.ItemCallback<NoteVO>(){
     override fun areContentsTheSame(oldItem: NoteVO, newItem: NoteVO): Boolean {
         return oldItem == newItem
     }
-
 }
 
-class NoteListListener(val clickListener : (v:View?,EventType) -> Unit) {
-    fun onClick(v0 : View? ,noteVO: NoteVO) = clickListener(v0,EventType.ON_BUTTON_CLICK)
-    fun onClickCheckBoxChanged(v0: CompoundButton?, isChecked: Boolean, noteVO: NoteVO) {
-        when (v0?.id){
-            R.id.cb_check -> {
-                noteVO.isChecked = v0.isChecked
-                clickListener(v0, EventType.ON_CHECKBOX_CHANGED)
-            }
-            R.id.cb_all_check -> {
-                v0.isChecked = isChecked
-                clickListener(v0, EventType.ON_CHECKBOX_CHANGED)
-            }
-        }
-    }
-}
