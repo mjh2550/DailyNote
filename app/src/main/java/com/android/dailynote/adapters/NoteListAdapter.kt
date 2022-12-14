@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.ListAdapter
 import android.widget.TextView
 import android.widget.Toast
@@ -61,13 +62,18 @@ class NoteListDiffCallback : DiffUtil.ItemCallback<NoteVO>(){
 
 }
 
-class NoteListListener(val clickListener : (noteVO:NoteVO,EventType) -> Unit){
-    fun onClick(noteVO: NoteVO) = clickListener(noteVO,EventType.ON_BUTTON_CLICK)
-    fun onClickCheckBoxChanged(noteVO: NoteVO) {
-        noteVO.isChecked = !noteVO.isChecked
-        clickListener(noteVO, EventType.ON_CHECKBOX_CHANGED)
-    }
-    fun onClickAllCheckBoxChanged() {
-        println("testtest")
+class NoteListListener(val clickListener : (v:View?,EventType) -> Unit) {
+    fun onClick(v0 : View? ,noteVO: NoteVO) = clickListener(v0,EventType.ON_BUTTON_CLICK)
+    fun onClickCheckBoxChanged(v0: CompoundButton?, isChecked: Boolean, noteVO: NoteVO) {
+        when (v0?.id){
+            R.id.cb_check -> {
+                noteVO.isChecked = v0.isChecked
+                clickListener(v0, EventType.ON_CHECKBOX_CHANGED)
+            }
+            R.id.cb_all_check -> {
+                v0.isChecked = isChecked
+                clickListener(v0, EventType.ON_CHECKBOX_CHANGED)
+            }
+        }
     }
 }

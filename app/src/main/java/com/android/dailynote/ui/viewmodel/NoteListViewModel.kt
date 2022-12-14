@@ -24,6 +24,7 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     private val database = Firebase.database(FIREBASE_DB_URL)
     private val myRef = database.getReference("daily_note")
 //    var dataList1 = MutableLiveData<NoteVO>()
+    var deleteList = emptyList<NoteVO>()
 
     val dataList = repository.getAllNoteList()
 
@@ -49,7 +50,7 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     fun onCheckBoxChanged(isChecked : Boolean){
         if(dataList.value != null && dataList.value!!.isNotEmpty()) {
             for (listNoteVo in dataList.value!!) {
-                println("$isChecked")
+                println("${listNoteVo.noteId} ${listNoteVo.isChecked} -> $isChecked")
                 listNoteVo.isChecked = isChecked
             }
         }

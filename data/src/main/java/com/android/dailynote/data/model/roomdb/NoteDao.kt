@@ -21,6 +21,9 @@ interface NoteDao {
     @Query("DELETE FROM note_table")
     fun deleteAll()
 
+    @Query("DELETE FROM note_table WHERE note_id IN (:deleteList)")
+    fun deleteByList(deleteList : List<Int> )
+
 //    @Update
 //    fun update(noteVO: NoteVO)
 

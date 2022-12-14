@@ -31,7 +31,6 @@
             android:id="@+id/cb_all_check"
             android:layout_weight="0.1"
             android:layout_width="0dp"
-            android:onClick="@{()-> clickListener.onClickAllCheckBoxChanged()}"
             android:layout_height="match_parent"/>
 
         <!-- 날짜 , 검색어 , 검색 버튼 -->
@@ -65,11 +64,13 @@
 
         <ImageButton
             android:id="@+id/btn_search"
-            android:layout_weight="0.1"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:backgroundTint="@color/navy"
             android:onClick="@{() -> vm.clickBtnSearch()}"
-            android:src="@mipmap/ic_launcher_round"
-            android:layout_height="match_parent"/>
+            android:src="@drawable/ic_baseline_search_24"
+            app:tint="@color/white" />
 
 
     </LinearLayout>
@@ -100,10 +101,35 @@
         android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="86dp"
+        android:visibility="gone"
         android:src="@drawable/ic_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:backgroundTint="@color/lightRed"
+        android:id="@+id/btn_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="156dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_baseline_remove_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_baseline_more_vert_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -17,6 +17,8 @@
     <color name="blue_alpha50">#80055AAF</color>
     <color name="blue_alpha20">#33055AAF</color>
     <color name="blue_alpha10">#1A055AAF</color>
+    <color name="red">#FF0000</color>
+    <color name="lightRed">#FF3333</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
