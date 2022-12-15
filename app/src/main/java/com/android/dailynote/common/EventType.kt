@@ -1,4 +1,4 @@
-package com.android.dailynote.adapters
+package com.android.dailynote.common
 
 enum class EventType {
     ON_BUTTON_CLICK,

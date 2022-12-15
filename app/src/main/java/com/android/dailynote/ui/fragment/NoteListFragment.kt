@@ -10,7 +10,6 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isGone
-import androidx.core.view.iterator
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -18,17 +17,18 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.dailynote.R
-import com.android.dailynote.adapters.EventType
+import com.android.dailynote.common.EventType
 import com.android.dailynote.adapters.NoteListAdapter
 import com.android.dailynote.adapters.NoteListListener
 import com.android.dailynote.base.BaseFragment
+import com.android.dailynote.common.DateType
+import com.android.dailynote.common.TimeClass
 import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.data.network.util.ErrorUtil
 import com.android.dailynote.databinding.FragmentNoteListBinding
 import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
-import java.util.*
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener , CompoundButton.OnCheckedChangeListener{
 
@@ -44,18 +44,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         if(it.resultCode == Activity.RESULT_OK){
             val title = it.data?.getStringExtra("title")
             val contents = it.data?.getStringExtra("contents")
-
-            //val now = Date(System.currentTimeMillis()).toString()
-            val c = Calendar.getInstance()
-            val mYear = c[Calendar.YEAR]
-            val mMonth = c[Calendar.MONTH]
-            val mDay = c[Calendar.DAY_OF_MONTH]
-            val mHour = c[Calendar.HOUR]
-            val mMinute = c[Calendar.MINUTE]
-            val mSecond = c[Calendar.SECOND]
-            val day = "$mYear/$mMonth/$mDay"
-            val time = "$mHour:$mMinute:$mSecond"
-            val today = "$day $time"
+            val now = TimeClass().getCurrentTimeByDateType(DateType.NOW)
             mViewModel.insertData(NoteVO(
                 null,
                 title!!,
@@ -64,7 +53,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 "Y",
                 null,
                 null,
-                today,
+                now,
                 "Y",
                 null,
                 null,
@@ -139,15 +128,8 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             btnSearch.setOnClickListener(this@NoteListFragment)
             cbAllCheck.setOnCheckedChangeListener(this@NoteListFragment)
 
-            val c = Calendar.getInstance()
-            val mYear = c[Calendar.YEAR]
-            val mMonth = c[Calendar.MONTH]
-            val mDay = c[Calendar.DAY_OF_MONTH]
-            val recentMonth = 1
-            val toDate = "$mYear/${if(mMonth-recentMonth<=0) kotlin.math.abs(mMonth - recentMonth)+1 else {mMonth-recentMonth}}/$mDay"
-            val fromDate = "$mYear/$mMonth/$mDay"
-            btnToDate.text = toDate
-            btnFromDate.text = fromDate
+            btnToDate.text = TimeClass().getCurrentTimeByDateType(DateType.TO_DATE)
+            btnFromDate.text = TimeClass().getCurrentTimeByDateType(DateType.FROM_DATE)
         }
 
     }

@@ -16,6 +16,7 @@ class NoteRepository(applicationContext : Context){
     ).build()
 
     fun getAllNoteList() = db.noteDao().getAllNoteList()
+    fun getNoteListByDate(toDate:String, fromDate: String ) = db.noteDao().getNoteListByDate(toDate, fromDate)
 
     fun insertData(noteVO: NoteVO) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -24,6 +25,6 @@ class NoteRepository(applicationContext : Context){
     }
 
     fun deleteAll() = db.noteDao().deleteAll()
-
     fun deleteById(noteId:Int) = db.noteDao().deleteById(noteId = noteId)
+    fun deleteByList(deleteList : List<Int> ) = db.noteDao().deleteByList(deleteList = deleteList)
 }

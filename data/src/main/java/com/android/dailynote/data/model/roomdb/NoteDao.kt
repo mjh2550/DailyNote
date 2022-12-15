@@ -12,6 +12,12 @@ interface NoteDao {
     @Query("SELECT * FROM note_table ORDER BY note_id ASC")
     fun getAllNoteList() : LiveData<List<NoteVO>>
 
+    @Query("SELECT * FROM note_table " +
+            "WHERE 1=1 "+
+            "AND reg_time BETWEEN :toDate AND :fromDate "+
+            "ORDER BY note_id ASC")
+    fun getNoteListByDate(toDate : String , fromDate : String) : LiveData<List<NoteVO>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(noteVO: NoteVO)
 
