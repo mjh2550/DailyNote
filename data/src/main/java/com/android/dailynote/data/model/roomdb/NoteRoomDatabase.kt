@@ -14,6 +14,7 @@ import java.util.concurrent.Executors
     NoteVO::class
                ],
     version = 1)
+@TypeConverters(Converters::class)
 abstract class NoteRoomDatabase : RoomDatabase() {
 
     abstract fun noteDao() : NoteDao

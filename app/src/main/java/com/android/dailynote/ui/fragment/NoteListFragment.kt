@@ -29,6 +29,7 @@ import com.android.dailynote.data.network.util.ErrorUtil
 import com.android.dailynote.databinding.FragmentNoteListBinding
 import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
+import java.util.*
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener , CompoundButton.OnCheckedChangeListener{
 
@@ -44,19 +45,20 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         if(it.resultCode == Activity.RESULT_OK){
             val title = it.data?.getStringExtra("title")
             val contents = it.data?.getStringExtra("contents")
-            val now = TimeClass().getCurrentTimeByDateType(DateType.NOW)
-            mViewModel.insertData(NoteVO(
+//            val now = TimeClass().getCurrentTimeByDateType(DateType.NOW)
+            val now = Date()
+            mDataBinding.vm?.insertData(NoteVO(
                 null,
                 title!!,
                 contents!!,
                 "test Writer",
                 "Y",
                 null,
-                null,
+                now,
                 now,
                 "Y",
                 null,
-                null,
+                now,
                 false,
             ))
 
@@ -128,8 +130,8 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             btnSearch.setOnClickListener(this@NoteListFragment)
             cbAllCheck.setOnCheckedChangeListener(this@NoteListFragment)
 
-            btnToDate.text = TimeClass().getCurrentTimeByDateType(DateType.TO_DATE)
-            btnFromDate.text = TimeClass().getCurrentTimeByDateType(DateType.FROM_DATE)
+            btnToDate.text = TimeClass().getCurrentTimeStringByDateType(DateType.TO_DATE).toString()
+            btnFromDate.text = TimeClass().getCurrentTimeStringByDateType(DateType.FROM_DATE).toString()
         }
 
     }

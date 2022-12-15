@@ -1,20 +1,11 @@
 package com.android.dailynote.ui.viewmodel
 
-import android.app.Application
-import android.content.Context
-import android.content.Intent
-import android.widget.Toast
-import androidx.lifecycle.*
 import com.android.dailynote.BuildConfig
-import com.android.dailynote.R
-import com.android.dailynote.base.BaseApplication
 import com.android.dailynote.base.BaseViewModel
 import com.android.dailynote.common.DateType
+import com.android.dailynote.common.TimeClass
 import com.android.dailynote.data.model.entity.NoteVO
-import com.android.dailynote.data.model.firebase.FireBaseDataSource
 import com.android.dailynote.data.model.roomdb.NoteRepository
-import com.android.dailynote.ui.activity.HomeActivity
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
@@ -26,9 +17,12 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     private val database = Firebase.database(FIREBASE_DB_URL)
     private val myRef = database.getReference("daily_note")
 
-    //    var dataList1 = MutableLiveData<NoteVO>()
+    // var dataList1 = MutableLiveData<NoteVO>()
     var deleteList = emptyList<NoteVO>()
-    val dataList = repository.getAllNoteList()
+//    val dataList = repository.getAllNoteList()
+    //TODO 검색 시 안나옴
+    val dataList = repository.getNoteListByDate(TimeClass().getCurrentTimeByDateType(DateType.TO_DATE)
+                                            ,TimeClass().getCurrentTimeByDateType(DateType.FROM_DATE))
 
     fun insertData(noteVO: NoteVO) = repository.insertData(noteVO)
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.android.dailynote.data.model.entity.NoteVO
 import retrofit2.http.DELETE
+import java.util.*
 
 @Dao
 interface NoteDao {
@@ -16,7 +17,7 @@ interface NoteDao {
             "WHERE 1=1 "+
             "AND reg_time BETWEEN :toDate AND :fromDate "+
             "ORDER BY note_id ASC")
-    fun getNoteListByDate(toDate : String , fromDate : String) : LiveData<List<NoteVO>>
+    fun getNoteListByDate(toDate : Date, fromDate : Date) : LiveData<List<NoteVO>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(noteVO: NoteVO)

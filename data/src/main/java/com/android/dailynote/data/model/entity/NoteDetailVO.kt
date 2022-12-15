@@ -1,14 +1,11 @@
 package com.android.dailynote.data.model.entity
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDateTime
 import java.util.*
 import javax.annotation.Nonnull
 
-@Entity(tableName = "note_table")
-data class NoteVO(
+data class NoteDetailVO(
     ///id
     @PrimaryKey(autoGenerate = true)
     @Nonnull
@@ -55,34 +52,8 @@ data class NoteVO(
     @ColumnInfo(name = "comment_time")
     val commentTime : Date,
 
-    ///리스트 체크여부
-    @ColumnInfo(name = "isChecked")
-    var isChecked : Boolean
-){
-    constructor(noteTitle: String,
-                noteContents: String,
-                noteWriter: String,
-                attachYN: String,
-                attachPath: String? = null,
-                editTime: Date ,
-                regTime: Date ,
-                commentYN: String ,
-                commentContents: String? = null,
-                commentTime: Date,
-                isChecked: Boolean = false,
-                ) :
-            this(null,
-                noteTitle,
-                noteContents,
-                noteWriter,
-                attachYN,
-                attachPath,
-                editTime,
-                regTime,
-                commentYN,
-                commentContents,
-                commentTime,
-                isChecked,
-            )
+    ///상위 id
+    @ColumnInfo(name = "parent_id")
+    val parentId : String?,
 
-}
+)
