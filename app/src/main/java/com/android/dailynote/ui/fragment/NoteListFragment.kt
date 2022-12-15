@@ -97,7 +97,6 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
 
     override fun getLayoutRes() = R.layout.fragment_note_list
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun subscribeUi() {
 
         val adapter = NoteListAdapter(
@@ -177,12 +176,12 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             }
             R.id.btn_del-> {
                 val list = emptyList<NoteVO>()
-                for (noteVo in mViewModel.dataList.value!!){
+                for (noteVo in mDataBinding.vm?.dataList?.value!!){
                     if(noteVo.isChecked) {
                         list.plus(noteVo)
                     }
                 }
-                mViewModel.deleteList = list
+                mDataBinding.vm?.deleteList = list
             }
             R.id.btn_more -> {
                 val isBtnGone = mDataBinding.btnAdd.isGone
@@ -199,7 +198,6 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 }
             }
         }
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -214,6 +212,4 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
            }
        }
     }
-
-
 }
