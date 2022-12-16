@@ -6,52 +6,55 @@ import java.util.*
 
 class TimeClass {
 
+    private val timeZone: TimeZone = TimeZone.getTimeZone("Asia/Seoul")
+
     @SuppressLint("SimpleDateFormat")
-    fun getCurrentTimeStringByDateType(dateType:DateType) : String {
-        val c = Calendar.getInstance()
-        val mYear = c[Calendar.YEAR]
-        val mMonth = c[Calendar.MONTH]
-        val mDay = c[Calendar.DAY_OF_MONTH]
-        val mHour = c[Calendar.HOUR]
-        val mMinute = c[Calendar.MINUTE]
-        val mSecond = c[Calendar.SECOND]
-        val recentMonth = 1
-        val day = "$mYear/$mMonth/$mDay"
-        val time = "$mHour:$mMinute:$mSecond"
-        val toDate = "$mYear/${if(mMonth-recentMonth<=0) kotlin.math.abs(mMonth - recentMonth)+1 else {mMonth-recentMonth}}/$mDay"
-        val fromDate =  "$mYear/$mMonth/$mDay"
-        val now = "$day $time"
-        return when (dateType){
-            DateType.TO_DATE -> toDate
-            DateType.FROM_DATE -> fromDate
-            DateType.NOW -> now
-        }
-    }
-    @SuppressLint("SimpleDateFormat")
-    fun getCurrentTimeByDateType(dateType:DateType) : Date {
+    fun getCurrentTimeToString(cal : Calendar,dateType: DateType): String {
         val ymdFormatter = "yyyy/MM/dd"
         val hmsFormatter = "HH:mm:ss"
         val ymdFormat = SimpleDateFormat(ymdFormatter)
-        //val hmsFormat = SimpleDateFormat(hmsFormatter)
         val dateFormat = SimpleDateFormat("$ymdFormatter $hmsFormatter")
-//        val today = Calendar.getInstance().time
-        val c = Calendar.getInstance()
-        val mYear = c[Calendar.YEAR]
-        val mMonth = c[Calendar.MONTH]
-        val mDay = c[Calendar.DAY_OF_MONTH]
-        val mHour = c[Calendar.HOUR]
-        val mMinute = c[Calendar.MINUTE]
-        val mSecond = c[Calendar.SECOND]
+
+        cal.timeZone = timeZone
         val recentMonth = 1
-        val day = "$mYear/$mMonth/$mDay"
-        val time = "$mHour:$mMinute:$mSecond"
-        val toDate = "$mYear/${if(mMonth-recentMonth<=0) kotlin.math.abs(mMonth - recentMonth)+1 else {mMonth-recentMonth}}/$mDay"
-        val fromDate =  "$mYear/$mMonth/$mDay"
-        val now = "$day $time"
-        return when (dateType){
-            DateType.TO_DATE -> ymdFormat.parse(toDate)!!
-            DateType.FROM_DATE -> ymdFormat.parse(fromDate)!!
-            DateType.NOW -> ymdFormat.parse(now)!!
+
+        return when (dateType) {
+            DateType.TO_DATE -> {
+                cal.add(Calendar.MONTH, -recentMonth)
+                ymdFormat.format(cal.time)
+            }
+            DateType.FROM_DATE -> ymdFormat.format(cal.time)
+            DateType.NOW -> dateFormat.format(cal.time)
         }
     }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getCurrentTimeToDate(cal : Calendar, dateType: DateType): Date {
+        cal.timeZone = timeZone
+        val recentMonth = 1
+
+        return when (dateType) {
+            DateType.TO_DATE -> {
+                cal.add(Calendar.MONTH, -recentMonth)
+                cal.set(Calendar.HOUR_OF_DAY,0)
+                cal.set(Calendar.MINUTE,0)
+                cal.set(Calendar.SECOND,0)
+                cal.time
+            }
+            DateType.FROM_DATE -> {
+                cal.set(Calendar.HOUR_OF_DAY, 23)
+                cal.set(Calendar.MINUTE,59)
+                cal.set(Calendar.SECOND,59)
+                cal.time
+            }
+            DateType.NOW -> cal.time
+        }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun stringToDate (dateString : String,format:String) :Date = SimpleDateFormat(format).parse(dateString)!!
+
+    @SuppressLint("SimpleDateFormat")
+    fun dateToString (date : Date, format: String) :String  = SimpleDateFormat(format).format(date)
+
 }

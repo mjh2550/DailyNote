@@ -41,12 +41,12 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         })[NoteListViewModel::class.java]
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if(it.resultCode == Activity.RESULT_OK){
             val title = it.data?.getStringExtra("title")
             val contents = it.data?.getStringExtra("contents")
-//            val now = TimeClass().getCurrentTimeByDateType(DateType.NOW)
-            val now = Date()
+            val now = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.NOW)
             mDataBinding.vm?.insertData(NoteVO(
                 null,
                 title!!,
@@ -61,6 +61,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 now,
                 false,
             ))
+            mDataBinding.lvNoteItem.adapter?.notifyDataSetChanged()
 
         } else {
             ErrorUtil.showErrorMessage(requireActivity(),getString(R.string.msg_save_fail)) {
@@ -130,8 +131,8 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             btnSearch.setOnClickListener(this@NoteListFragment)
             cbAllCheck.setOnCheckedChangeListener(this@NoteListFragment)
 
-            btnToDate.text = TimeClass().getCurrentTimeStringByDateType(DateType.TO_DATE).toString()
-            btnFromDate.text = TimeClass().getCurrentTimeStringByDateType(DateType.FROM_DATE).toString()
+            btnToDate.text = TimeClass().getCurrentTimeToString(Calendar.getInstance(),DateType.TO_DATE)
+            btnFromDate.text = TimeClass().getCurrentTimeToString(Calendar.getInstance(),DateType.FROM_DATE)
         }
 
     }
@@ -142,20 +143,12 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         navController = Navigation.findNavController(view)
     }
 
-    override fun onClick(p0: View?) {
-        when(p0?.id){
-            R.id.btn_add -> onClickFloatingButton(R.id.btn_add)
-            R.id.btn_del -> onClickFloatingButton(R.id.btn_del)
-            R.id.btn_more -> onClickFloatingButton(R.id.btn_more)
-        }
-    }
-
-    private fun onClickFloatingButton (btnId : Int){
-        when (btnId){
+    override fun onClick(btnId: View?) {
+        when (btnId?.id){
             R.id.btn_add -> {
                 val intent = Intent(requireActivity(),NoteWriteActivity::class.java)
-        //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        //        startActivity(intent)
+                //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                //        startActivity(intent)
                 startForResult.launch(intent)
             }
             R.id.btn_del-> {

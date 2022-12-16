@@ -20,12 +20,14 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     // var dataList1 = MutableLiveData<NoteVO>()
     var deleteList = emptyList<NoteVO>()
 //    val dataList = repository.getAllNoteList()
-    //TODO 검색 시 안나옴
-    val dataList = repository.getNoteListByDate(TimeClass().getCurrentTimeByDateType(DateType.TO_DATE)
-                                            ,TimeClass().getCurrentTimeByDateType(DateType.FROM_DATE))
+
+    var toDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE)
+    var fromDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.FROM_DATE)
+    var dataList = repository.getNoteListByDate(toDate,fromDate)
+    var schToDate = ""
+    var schFromDate = ""
 
     fun insertData(noteVO: NoteVO) = repository.insertData(noteVO)
-
     fun deleteAll() = repository.deleteAll()
     fun deleteById(noteId: Int) = repository.deleteById(noteId)
 
@@ -33,13 +35,37 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         println("OK")
     }
 
-    fun clickBtnDate(){
+    fun clickBtnDate(dateType: DateType){
         //TODO 날짜 세팅 버튼 클릭 시 이벤트
         // 달력 출력 후 클릭한 연월일을 YY/MM/DD 로 버튼 텍스트 출력
+        when(dateType){
+            DateType.TO_DATE -> {
+                println("to_date")
+//                schToDate = ""
+            }
+            DateType.FROM_DATE -> {
+                println("from_date")
+//                schFromDate = ""
+            }
+            else -> {
+
+            }
+        }
     }
 
     fun clickBtnSearch(){
-        //TODO
+
+
+        /*toDate = if(schToDate.isNotEmpty()) TimeClass().stringToDate(schToDate,"yyyy/mm/dd HH:mm:ss")
+        else TimeClass().getCurrentTimeToDate(Calendar.getInstance(), DateType.TO_DATE)
+
+        fromDate = if(schFromDate.isNotEmpty()) TimeClass().stringToDate(schFromDate,"yyyy/mm/dd HH:mm:ss")
+        else TimeClass().getCurrentTimeToDate(Calendar.getInstance(), DateType.FROM_DATE)*/
+
+        toDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE)
+        println("$toDate $fromDate")
+        dataList = repository.getNoteListByDate(toDate,fromDate)
+        println("${dataList.value?.size}")
     }
 
     fun onCheckBoxAllChanged(isChecked : Boolean){
