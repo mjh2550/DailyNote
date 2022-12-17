@@ -17,4 +17,6 @@
     <string name="service_error">일시적으로 서비스가 원활하지 않습니다.\n잠시 후 다시 이용해주세요.</string>
 
     <string name="msg_save_fail">저장에 실패하였습니다. 다시 시도해 주세요</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

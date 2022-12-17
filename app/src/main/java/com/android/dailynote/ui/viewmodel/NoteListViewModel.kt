@@ -35,27 +35,7 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         println("OK")
     }
 
-    fun clickBtnDate(dateType: DateType){
-        //TODO 날짜 세팅 버튼 클릭 시 이벤트
-        // 달력 출력 후 클릭한 연월일을 YY/MM/DD 로 버튼 텍스트 출력
-        when(dateType){
-            DateType.TO_DATE -> {
-                println("to_date")
-//                schToDate = ""
-            }
-            DateType.FROM_DATE -> {
-                println("from_date")
-//                schFromDate = ""
-            }
-            else -> {
-
-            }
-        }
-    }
-
     fun clickBtnSearch(){
-
-
         /*toDate = if(schToDate.isNotEmpty()) TimeClass().stringToDate(schToDate,"yyyy/mm/dd HH:mm:ss")
         else TimeClass().getCurrentTimeToDate(Calendar.getInstance(), DateType.TO_DATE)
 
@@ -77,5 +57,14 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         }
     }
 
+    fun deleteList(){
+        val targetList = emptyList<Int>()
+        for(v in deleteList){
+            targetList.plus(v.noteId)
+        }
+        //TODO 체크박스 항목 별로 삭제기능 구현
+        val result = repository.deleteAll()
+        println("result : $result")
+    }
 
 }

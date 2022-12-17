@@ -2,10 +2,13 @@ package com.android.dailynote.ui.fragment
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.CalendarView
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -130,6 +133,8 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             btnFromDate.setOnClickListener(this@NoteListFragment)
             btnSearch.setOnClickListener(this@NoteListFragment)
             cbAllCheck.setOnCheckedChangeListener(this@NoteListFragment)
+            btnToDate.setOnClickListener(this@NoteListFragment)
+            btnFromDate.setOnClickListener(this@NoteListFragment)
 
             btnToDate.text = TimeClass().getCurrentTimeToString(Calendar.getInstance(),DateType.TO_DATE)
             btnFromDate.text = TimeClass().getCurrentTimeToString(Calendar.getInstance(),DateType.FROM_DATE)
@@ -159,6 +164,9 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                     }
                 }
                 mDataBinding.vm?.deleteList = list
+
+                //Delete
+                mDataBinding.vm?.deleteList()
             }
             R.id.btn_more -> {
                 val isBtnGone = mDataBinding.btnAdd.isGone
@@ -174,6 +182,13 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                     mDataBinding.btnDel.isEnabled = false
                 }
             }
+            R.id.btn_to_date -> {
+                loadCalendar()
+            }
+            R.id.btn_from_date ->{
+                loadCalendar()
+            }
+
         }
     }
 
@@ -188,5 +203,12 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                mDataBinding.lvNoteItem.adapter?.notifyDataSetChanged()
            }
        }
+    }
+
+    private fun loadCalendar() {
+        //Calander 띄우기
+        //TODO 클릭 시 세팅되어 있는 시간, OK 시 선택한 시간 나오게
+        val dialog = DatePickerFragment()
+        dialog.show(childFragmentManager,null)
     }
 }

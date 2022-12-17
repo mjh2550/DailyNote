@@ -26,10 +26,10 @@ interface NoteDao {
     fun deleteById(noteId : Int)
 
     @Query("DELETE FROM note_table")
-    fun deleteAll()
+    fun deleteAll() : Int
 
     @Query("DELETE FROM note_table WHERE note_id IN (:deleteList)")
-    fun deleteByList(deleteList : List<Int> )
+    fun deleteByList(deleteList : List<Int> ) : Int
 
 //    @Update
 //    fun update(noteVO: NoteVO)

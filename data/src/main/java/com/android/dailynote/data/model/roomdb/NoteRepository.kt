@@ -26,7 +26,19 @@ class NoteRepository(applicationContext : Context){
         }
     }
 
-    fun deleteAll() = db.noteDao().deleteAll()
-    fun deleteById(noteId:Int) = db.noteDao().deleteById(noteId = noteId)
-    fun deleteByList(deleteList : List<Int> ) = db.noteDao().deleteByList(deleteList = deleteList)
+    fun deleteAll()  {
+        CoroutineScope(Dispatchers.IO).launch {
+            db.noteDao().deleteAll()
+        }
+    }
+    fun deleteById(noteId:Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            db.noteDao().deleteById(noteId = noteId)
+        }
+    }
+    fun deleteByList(deleteList : List<Int> ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            db.noteDao().deleteByList(deleteList = deleteList)
+        }
+    }
 }
