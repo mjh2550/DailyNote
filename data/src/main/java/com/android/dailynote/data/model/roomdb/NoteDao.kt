@@ -1,11 +1,10 @@
 package com.android.dailynote.data.model.roomdb
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.android.dailynote.data.model.entity.NoteVO
-import retrofit2.http.DELETE
 import java.util.*
+
 
 @Dao
 interface NoteDao {
@@ -29,7 +28,7 @@ interface NoteDao {
     fun deleteAll() : Int
 
     @Query("DELETE FROM note_table WHERE note_id IN (:deleteList)")
-    fun deleteByList(deleteList : List<Int> ) : Int
+    fun deleteByList( deleteList : MutableList<String> )
 
 //    @Update
 //    fun update(noteVO: NoteVO)

@@ -36,9 +36,13 @@ class NoteRepository(applicationContext : Context){
             db.noteDao().deleteById(noteId = noteId)
         }
     }
-    fun deleteByList(deleteList : List<Int> ) {
+    fun deleteByList(deleteList : List<NoteVO> ) {
         CoroutineScope(Dispatchers.IO).launch {
-            db.noteDao().deleteByList(deleteList = deleteList)
+            val targetId = mutableListOf<String>()
+            for((idx, list) in deleteList.withIndex()){
+                targetId.add(idx,list.noteId.toString())
+            }
+            db.noteDao().deleteByList(deleteList = targetId)
         }
     }
 }

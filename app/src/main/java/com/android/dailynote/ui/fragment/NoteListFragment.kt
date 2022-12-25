@@ -33,6 +33,7 @@ import com.android.dailynote.databinding.FragmentNoteListBinding
 import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
 import java.util.*
+import kotlin.collections.ArrayList
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener , CompoundButton.OnCheckedChangeListener{
 
@@ -157,15 +158,13 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 startForResult.launch(intent)
             }
             R.id.btn_del-> {
-                val list = emptyList<NoteVO>()
-                for (noteVo in mDataBinding.vm?.dataList?.value!!){
+                val list = mutableListOf<NoteVO>()
+                for ((idx, noteVo) in mDataBinding.vm?.dataList?.value!!.withIndex()){
                     if(noteVo.isChecked) {
-                        list.plus(noteVo)
+                        list.add(idx,noteVo)
                     }
                 }
                 mDataBinding.vm?.deleteList = list
-
-                //Delete
                 mDataBinding.vm?.deleteList()
             }
             R.id.btn_more -> {

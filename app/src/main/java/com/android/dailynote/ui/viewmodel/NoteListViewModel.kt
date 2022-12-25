@@ -18,7 +18,7 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     private val myRef = database.getReference("daily_note")
 
     // var dataList1 = MutableLiveData<NoteVO>()
-    var deleteList = emptyList<NoteVO>()
+    var deleteList = listOf<NoteVO>()
 //    val dataList = repository.getAllNoteList()
 
     var toDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE)
@@ -58,13 +58,7 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     }
 
     fun deleteList(){
-        val targetList = emptyList<Int>()
-        for(v in deleteList){
-            targetList.plus(v.noteId)
-        }
-        //TODO 체크박스 항목 별로 삭제기능 구현
-        val result = repository.deleteAll()
-        println("result : $result")
+        repository.deleteByList(deleteList = deleteList!!)
     }
 
 }
