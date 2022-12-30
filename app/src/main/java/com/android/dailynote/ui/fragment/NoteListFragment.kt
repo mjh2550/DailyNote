@@ -159,9 +159,10 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             }
             R.id.btn_del-> {
                 val list = mutableListOf<NoteVO>()
-                for ((idx, noteVo) in mDataBinding.vm?.dataList?.value!!.withIndex()){
+                var cnt = 0;
+                for (noteVo in mDataBinding.vm?.dataList?.value!!){
                     if(noteVo.isChecked) {
-                        list.add(idx,noteVo)
+                        list.add(cnt++,noteVo)
                     }
                 }
                 mDataBinding.vm?.deleteList = list
