@@ -9,22 +9,12 @@ import androidx.fragment.app.DialogFragment
 import com.android.dailynote.base.BaseFragment
 import java.util.*
 
-class DatePickerFragment(
-    private val cal: Calendar = Calendar.getInstance()) : DialogFragment(), DatePickerDialog.OnDateSetListener {
+class DatePickerFragment(val cal: Calendar = Calendar.getInstance(),
+                         val listener : DatePickerDialog.OnDateSetListener) : DialogFragment() {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
-        return DatePickerDialog(requireActivity(),
-            this,
+    override fun onCreateDialog(savedInstanceState: Bundle?) =
+        DatePickerDialog(requireActivity(),listener,
             cal.get(Calendar.YEAR),
             cal.get(Calendar.MONTH),
             cal.get(Calendar.DAY_OF_MONTH))
-    }
-
-    //OK 선택 시
-    //TODO 데이터 변화
-    override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
-
-    }
-
 }

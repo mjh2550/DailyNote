@@ -2,6 +2,7 @@ package com.android.dailynote.ui.fragment
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -183,10 +184,10 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 }
             }
             R.id.btn_to_date -> {
-                loadCalendar()
+                loadCalendar(DateType.TO_DATE)
             }
             R.id.btn_from_date ->{
-                loadCalendar()
+                loadCalendar(DateType.FROM_DATE)
             }
 
         }
@@ -205,10 +206,24 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
        }
     }
 
-    private fun loadCalendar() {
-        //Calander 띄우기
-        //TODO 클릭 시 세팅되어 있는 시간, OK 시 선택한 시간 나오게
-        val dialog = DatePickerFragment()
-        dialog.show(childFragmentManager,null)
+    private fun loadCalendar(dateType: DateType) {
+
+        val cal = Calendar.getInstance()
+        val dialog = DatePickerFragment(cal = cal, listener = DatePickerDialog.OnDateSetListener {
+                dp, y, m, d ->
+            cal.set(y,m,d)
+            val currentYMD = "${y}/${m+1}/${d}"
+            if(dateType == DateType.TO_DATE) {
+                mDataBinding.btnToDate.text = currentYMD
+                mDataBinding.vm?.toDate = cal.time
+            }else if (dateType == DateType.FROM_DATE){
+                mDataBinding.btnFromDate.text = currentYMD
+                mDataBinding.vm?.fromDate = cal.time
+            }
+//            mDataBinding.vm?.getDataList()
+            mDataBinding.lvNoteItem.adapter?.notifyDataSetChanged()
+        })
+        dialog.show(childFragmentManager,"onCalLoad")
+
     }
 }
