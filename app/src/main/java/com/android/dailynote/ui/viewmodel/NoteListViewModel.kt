@@ -24,8 +24,6 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     var toDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE)
     var fromDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.FROM_DATE)
     var dataList = repository.getNoteListByDate(toDate,fromDate)
-    var schToDate = ""
-    var schFromDate = ""
 
     fun insertData(noteVO: NoteVO) = repository.insertData(noteVO)
     fun deleteAll() = repository.deleteAll()
@@ -36,13 +34,6 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     }
 
     fun clickBtnSearch(){
-        /*toDate = if(schToDate.isNotEmpty()) TimeClass().stringToDate(schToDate,"yyyy/mm/dd HH:mm:ss")
-        else TimeClass().getCurrentTimeToDate(Calendar.getInstance(), DateType.TO_DATE)
-
-        fromDate = if(schFromDate.isNotEmpty()) TimeClass().stringToDate(schFromDate,"yyyy/mm/dd HH:mm:ss")
-        else TimeClass().getCurrentTimeToDate(Calendar.getInstance(), DateType.FROM_DATE)*/
-
-        toDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE)
         println("$toDate $fromDate")
         dataList = repository.getNoteListByDate(toDate,fromDate)
         println("${dataList.value?.size}")
