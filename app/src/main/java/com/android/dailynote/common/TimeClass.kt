@@ -9,14 +9,13 @@ class TimeClass {
     private val timeZone: TimeZone = TimeZone.getTimeZone("Asia/Seoul")
 
     @SuppressLint("SimpleDateFormat")
-    fun getCurrentTimeToString(cal : Calendar,dateType: DateType): String {
+    fun getCurrentTimeToString(cal : Calendar,dateType: DateType,recentMonth: Int = 0): String {
         val ymdFormatter = "yyyy/MM/dd"
         val hmsFormatter = "HH:mm:ss"
         val ymdFormat = SimpleDateFormat(ymdFormatter)
         val dateFormat = SimpleDateFormat("$ymdFormatter $hmsFormatter")
 
         cal.timeZone = timeZone
-        val recentMonth = 1
 
         return when (dateType) {
             DateType.TO_DATE -> {
@@ -29,9 +28,8 @@ class TimeClass {
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun getCurrentTimeToDate(cal : Calendar, dateType: DateType): Date {
+    fun getCurrentTimeToDate(cal : Calendar, dateType: DateType, recentMonth: Int = 0): Date {
         cal.timeZone = timeZone
-        val recentMonth = 1
 
         return when (dateType) {
             DateType.TO_DATE -> {
