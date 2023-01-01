@@ -27,6 +27,9 @@
         android:theme="@style/Theme.DailyNote"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.NoteDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.NoteWriteActivity"
             android:exported="false" />
         <activity
