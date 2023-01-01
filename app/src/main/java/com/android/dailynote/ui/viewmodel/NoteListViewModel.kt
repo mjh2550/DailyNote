@@ -35,7 +35,7 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
 
     fun loadData() = viewModelScope.launch {
         val result = searchData()
-        _dataList.value = result
+//        _dataList.value = result
         _dataList.postValue(result)
     }
 
@@ -51,14 +51,12 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     fun deleteAll() = repository.deleteAll()
     fun deleteById(noteId: Int) = repository.deleteById(noteId)
 
+    //TODO DELETE
     fun click() {
         println("OK")
     }
 
-    fun clickBtnSearch(){
-        println("$toDate $fromDate")
-        loadData()
-    }
+    fun clickBtnSearch() = loadData()
 
     fun onCheckBoxAllChanged(isChecked : Boolean){
         if(dataList.value != null && dataList.value!!.isNotEmpty()) {
@@ -68,6 +66,5 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
             }
         }
     }
-
 
 }
