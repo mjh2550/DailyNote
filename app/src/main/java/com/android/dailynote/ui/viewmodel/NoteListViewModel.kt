@@ -35,8 +35,8 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
 
     fun loadData() = viewModelScope.launch {
         val result = searchData()
-//        _dataList.value = result
-        _dataList.postValue(result)
+        _dataList.value = result
+//        _dataList.postValue(result)
     }
 
     fun deleteList() = viewModelScope.launch {

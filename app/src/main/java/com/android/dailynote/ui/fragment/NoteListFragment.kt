@@ -211,9 +211,12 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun loadCalendar(dateType: DateType) {
+    private fun loadCalendar(dateType: DateType, cal : Calendar = Calendar.getInstance()) {
 
-        val cal = Calendar.getInstance()
+        if(dateType == DateType.TO_DATE) cal.time = mDataBinding.vm?.toDate
+        else cal.time = mDataBinding.vm?.fromDate
+
+//        val cal = Calendar.getInstance()
         val dialog = DatePickerFragment(cal = cal, listener = DatePickerDialog.OnDateSetListener {
                 _, y, m, d ->
             cal.set(y,m,d)
