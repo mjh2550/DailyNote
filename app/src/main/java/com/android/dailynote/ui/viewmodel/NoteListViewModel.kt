@@ -20,24 +20,18 @@ import java.util.*
 
 class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel() {
 
-    private val FIREBASE_DB_URL = BuildConfig.FIREBASE_URL
-    private val database = Firebase.database(FIREBASE_DB_URL)
-    private val myRef = database.getReference("daily_note")
-
-    // var dataList1 = MutableLiveData<NoteVO>()
-    var deleteList = listOf<NoteVO>()
-//    val dataList = repository.getAllNoteList()
-
-    var toDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE,1)
-    var fromDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.FROM_DATE)
-
-    init {
-        clickBtnSearch()
+    companion object {
+        private const val FIREBASE_DB_URL = BuildConfig.FIREBASE_URL
+        private val database = Firebase.database(FIREBASE_DB_URL)
+        private val myRef = database.getReference("daily_note")
     }
 
-    //TODO TEST
+    //    val dataList = repository.getAllNoteList()
+    var toDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE,1)
+    var fromDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.FROM_DATE)
     private val _dataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())
     val dataList : LiveData<List<NoteVO>> get() = _dataList
+    var deleteList = listOf<NoteVO>()
 
     fun loadData() = viewModelScope.launch {
         val result = searchData()
@@ -45,10 +39,17 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         _dataList.postValue(result)
     }
 
+    fun deleteList() = viewModelScope.launch {
+        deleteData()
+        loadData()
+    }
+
     private suspend fun searchData() = withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
         repository.getNoteListByDateList(toDate, fromDate)
     }
-
+    private suspend fun deleteData() = withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
+        repository.deleteByList(deleteList = deleteList)
+    }
 
     fun insertData(noteVO: NoteVO) = repository.insertData(noteVO)
     fun deleteAll() = repository.deleteAll()
@@ -72,8 +73,5 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         }
     }
 
-    fun deleteList(){
-        repository.deleteByList(deleteList = deleteList)
-    }
 
 }

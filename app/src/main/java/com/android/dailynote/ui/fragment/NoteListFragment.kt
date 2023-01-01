@@ -66,6 +66,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 now,
                 false,
             ))
+            mDataBinding.vm?.loadData()
             mDataBinding.lvNoteItem.adapter?.notifyDataSetChanged()
 
         } else {
@@ -118,6 +119,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         )
 
         with(mViewModel){
+            loadData()
             dataList.observe(viewLifecycleOwner){
                 it?.let{
                   adapter.submitList(it)
@@ -150,6 +152,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         navController = Navigation.findNavController(view)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onClick(btnId: View?) {
         when (btnId?.id){
             R.id.btn_add -> {
@@ -168,6 +171,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 }
                 mDataBinding.vm?.deleteList = list
                 mDataBinding.vm?.deleteList()
+                mDataBinding.lvNoteItem.adapter?.notifyDataSetChanged()
             }
             R.id.btn_more -> {
                 val isBtnGone = mDataBinding.btnAdd.isGone
@@ -206,11 +210,12 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
        }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun loadCalendar(dateType: DateType) {
 
         val cal = Calendar.getInstance()
         val dialog = DatePickerFragment(cal = cal, listener = DatePickerDialog.OnDateSetListener {
-                dp, y, m, d ->
+                _, y, m, d ->
             cal.set(y,m,d)
             val currentYMD = "${y}/${m+1}/${d}"
             if(dateType == DateType.TO_DATE) {
@@ -220,7 +225,6 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 mDataBinding.btnFromDate.text = currentYMD
                 mDataBinding.vm?.fromDate = cal.time
             }
-//            mDataBinding.vm?.getDataList()
             mDataBinding.lvNoteItem.adapter?.notifyDataSetChanged()
         })
         dialog.show(childFragmentManager,"onCalLoad")
