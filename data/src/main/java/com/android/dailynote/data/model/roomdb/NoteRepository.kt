@@ -6,6 +6,7 @@ import com.android.dailynote.data.model.entity.NoteVO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class NoteRepository(applicationContext : Context){
@@ -13,11 +14,15 @@ class NoteRepository(applicationContext : Context){
     private val db = Room.databaseBuilder(
         applicationContext,
         NoteRoomDatabase::class.java, "note_db"
-    )
-        .build()
+    ).build()
 
     fun getAllNoteList() = db.noteDao().getAllNoteList()
-    fun getNoteListByDateList(toDate:Date, fromDate: Date) = db.noteDao().getNoteListByDateList(toDate, fromDate)
+
+    suspend fun getNoteListByDateList(toDate:Date, fromDate: Date)
+    = withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
+        db.noteDao().getNoteListByDateList(toDate, fromDate)
+    }
+
     fun getNoteListByDateFlow(toDate:Date, fromDate: Date) = db.noteDao().getNoteListByDateFlow(toDate, fromDate)
 
     fun insertData(noteVO: NoteVO) {
@@ -36,13 +41,12 @@ class NoteRepository(applicationContext : Context){
             db.noteDao().deleteById(noteId = noteId)
         }
     }
-    fun deleteByList(deleteList : List<NoteVO> ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val targetId = mutableListOf<String>()
-            for((idx, list) in deleteList.withIndex()){
-                targetId.add(idx,list.noteId.toString())
-            }
-            db.noteDao().deleteByList(deleteList = targetId)
+    suspend fun deleteByList(deleteList : List<NoteVO>)
+    = withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
+        val targetId = mutableListOf<String>()
+        for((idx, list) in deleteList.withIndex()){
+            targetId.add(idx,list.noteId.toString())
         }
+        db.noteDao().deleteByList(deleteList = targetId)
     }
 }

@@ -44,12 +44,8 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         loadData()
     }
 
-    private suspend fun searchData() = withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
-        repository.getNoteListByDateList(toDate, fromDate)
-    }
-    private suspend fun deleteData() = withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
-        repository.deleteByList(deleteList = deleteList)
-    }
+    private suspend fun searchData() = repository.getNoteListByDateList(toDate, fromDate)
+    private suspend fun deleteData() = repository.deleteByList(deleteList = deleteList)
 
     fun insertData(noteVO: NoteVO) = repository.insertData(noteVO)
     fun deleteAll() = repository.deleteAll()
