@@ -3,6 +3,7 @@ package com.android.dailynote.data.model.roomdb
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.android.dailynote.data.model.entity.NoteVO
+import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 
@@ -16,7 +17,14 @@ interface NoteDao {
             "WHERE 1=1 "+
             "AND reg_time BETWEEN :toDate AND :fromDate "+
             "ORDER BY note_id ASC")
-    fun getNoteListByDate(toDate : Date, fromDate : Date) : LiveData<List<NoteVO>>
+    fun getNoteListByDateFlow(toDate : Date, fromDate : Date) : Flow<List<NoteVO>>
+
+    @Query("SELECT * FROM note_table " +
+            "WHERE 1=1 "+
+            "AND reg_time BETWEEN :toDate AND :fromDate "+
+            "ORDER BY note_id ASC")
+    fun getNoteListByDateList(toDate : Date, fromDate : Date) : List<NoteVO>
+
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(noteVO: NoteVO)

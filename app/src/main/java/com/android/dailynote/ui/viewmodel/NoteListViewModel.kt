@@ -1,5 +1,9 @@
 package com.android.dailynote.ui.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.android.dailynote.BuildConfig
 import com.android.dailynote.base.BaseViewModel
 import com.android.dailynote.common.DateType
@@ -8,6 +12,9 @@ import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import java.util.*
 
 
@@ -23,7 +30,25 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
 
     var toDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE)
     var fromDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.FROM_DATE)
-    var dataList = repository.getNoteListByDate(toDate,fromDate)
+
+    init {
+        clickBtnSearch()
+    }
+
+    //TODO TEST
+    private val _dataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())
+    val dataList : LiveData<List<NoteVO>> get() = _dataList
+
+    fun loadData() = viewModelScope.launch {
+        val result = searchData()
+        _dataList.value = result
+        _dataList.postValue(result)
+    }
+
+    private suspend fun searchData() = withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
+        repository.getNoteListByDateList(toDate, fromDate)
+    }
+
 
     fun insertData(noteVO: NoteVO) = repository.insertData(noteVO)
     fun deleteAll() = repository.deleteAll()
@@ -35,8 +60,7 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
 
     fun clickBtnSearch(){
         println("$toDate $fromDate")
-        dataList = repository.getNoteListByDate(toDate,fromDate)
-        println("${dataList.value?.size}")
+        loadData()
     }
 
     fun onCheckBoxAllChanged(isChecked : Boolean){
@@ -49,7 +73,7 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     }
 
     fun deleteList(){
-        repository.deleteByList(deleteList = deleteList!!)
+        repository.deleteByList(deleteList = deleteList)
     }
 
 }

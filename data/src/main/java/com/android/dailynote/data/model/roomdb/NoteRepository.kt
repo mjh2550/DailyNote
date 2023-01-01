@@ -1,7 +1,6 @@
 package com.android.dailynote.data.model.roomdb
 
 import android.content.Context
-import androidx.annotation.WorkerThread
 import androidx.room.Room
 import com.android.dailynote.data.model.entity.NoteVO
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +17,8 @@ class NoteRepository(applicationContext : Context){
         .build()
 
     fun getAllNoteList() = db.noteDao().getAllNoteList()
-    fun getNoteListByDate(toDate:Date, fromDate: Date) = db.noteDao().getNoteListByDate(toDate, fromDate)
+    fun getNoteListByDateList(toDate:Date, fromDate: Date) = db.noteDao().getNoteListByDateList(toDate, fromDate)
+    fun getNoteListByDateFlow(toDate:Date, fromDate: Date) = db.noteDao().getNoteListByDateFlow(toDate, fromDate)
 
     fun insertData(noteVO: NoteVO) {
         CoroutineScope(Dispatchers.IO).launch {
