@@ -31,6 +31,7 @@ import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.data.network.util.ErrorUtil
 import com.android.dailynote.databinding.FragmentNoteListBinding
+import com.android.dailynote.ui.activity.NoteDetailActivity
 import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
 import java.util.*
@@ -98,10 +99,15 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     override fun subscribeUi() {
 
         val adapter = NoteListAdapter(
-            NoteListListener { cb , isChecked,noteVO, eventType ->
+            NoteListListener { _, isChecked, noteVO, eventType ->
                 when(eventType){
                     EventType.ON_BUTTON_CLICK -> {
-                        Toast.makeText(requireContext(),"ON_BUTTON_CLICK",Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(requireContext(),"ON_BUTTON_CLICK ${noteVO?.noteId}",Toast.LENGTH_SHORT).show()
+                        //TODO 상세탭으로 이동
+                        val intent = Intent(requireActivity(),NoteDetailActivity::class.java)
+                        intent.putExtra("NOTE_ID",noteVO?.noteId)
+//                        startForResult.launch(intent)
+                        startActivity(intent)
                     }
                     EventType.ON_CHECKBOX_CHANGED -> {
 //                        Toast.makeText(requireContext(),"ON_CHECKBOX_CHANGED",Toast.LENGTH_SHORT).show()
