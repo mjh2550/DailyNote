@@ -32,16 +32,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleBar">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tv_note_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="tv_note_id\ndata2\ndata3" />
+                android:hint="tv_note_id\ndata2\ndata3"
+                android:visibility="gone"/>-->
             <!--<TextView
                 android:id="@+id/tv_note_title"
                 android:layout_width="match_parent"
@@ -51,61 +52,78 @@
                 android:id="@+id/edt_note_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Type Title!"
+                android:inputType="textPersonName"
                 android:text="@={vm.edtTitleText}"
-                android:hint="type title" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/edt_note_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="start|top"
+                android:gravity="top"
+                android:hint="Type Contents!"
+                android:inputType="text|textMultiLine"
+                android:lines="50"
+                android:padding="10dp"
+                android:scrollbars="vertical"
                 android:text="@={vm.edtContentsText}"
-                android:hint="type contents"
-                android:inputType="textMultiLine" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_note_title" />
 
-            <TextView
+           <!-- <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_note_writer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="tv_note_writer\ndata2\ndata3" />
+                android:hint="tv_note_writer\ndata2\ndata3" />-->
             <!--<TextView
                 android:id="@+id/tv_note_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="tv_note_contents\ndata2\ndata3"/>-->
 
-            <TextView
+          <!--  <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_note_regTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="tv_note_regTime\ndata2\ndata3" />
+                android:hint="tv_note_regTime\ndata2\ndata3" />-->
 
-            <TextView
+          <!--  <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_note_attachYN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="tv_note_attachYN\ndata2\ndata3" />
+                android:hint="tv_note_attachYN\ndata2\ndata3" />-->
 
-            <TextView
+           <!-- <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_note_commentYN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="tv_note_commentYN\ndata2\ndata3" />
+                android:hint="tv_note_commentYN\ndata2\ndata3" />-->
 
-            <TextView
+          <!--  <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_note_comment_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="tv_note_comment_contents\ndata2\ndata3" />
+                android:hint="tv_note_comment_contents\ndata2\ndata3" />-->
 
-            <TextView
+          <!--  <TextView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
-                android:hint="test\ndata2\ndata3" />
+                android:hint="test\ndata2\ndata3" />-->
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
@@ -122,17 +140,17 @@
 
         <Button
             android:id="@+id/btn_cancel"
-            android:text="@string/btn_cancel"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:layout_height="match_parent"/>
+            android:text="@string/btn_cancel" />
 
         <Button
             android:id="@+id/btn_save"
-            android:text="@string/btn_save"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:layout_height="match_parent"/>
+            android:text="@string/btn_save" />
 
     </LinearLayout>
 

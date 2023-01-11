@@ -37,9 +37,11 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         val result = searchData()
         _dataList.value = result
 //        _dataList.postValue(result)
+        isLoading.postValue(false)
     }
 
     fun deleteList() = viewModelScope.launch {
+        isLoading.postValue(true)
         deleteData()
         loadData()
     }

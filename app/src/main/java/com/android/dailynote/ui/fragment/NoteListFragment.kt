@@ -103,7 +103,6 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 when(eventType){
                     EventType.ON_BUTTON_CLICK -> {
 //                        Toast.makeText(requireContext(),"ON_BUTTON_CLICK ${noteVO?.noteId}",Toast.LENGTH_SHORT).show()
-                        //TODO 상세탭으로 이동
                         val intent = Intent(requireActivity(),NoteDetailActivity::class.java)
                         intent.putExtra("NOTE_ID",noteVO?.noteId)
 //                        startForResult.launch(intent)

@@ -23,6 +23,11 @@ class NoteRepository(applicationContext : Context){
         db.noteDao().getNoteListByDateList(toDate, fromDate)
     }
 
+    suspend fun getNoteContentsByNoteId(noteId:Long)
+            = withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
+        db.noteDao().getNoteContentsByNoteId(noteId)
+    }
+
     fun getNoteListByDateFlow(toDate:Date, fromDate: Date) = db.noteDao().getNoteListByDateFlow(toDate, fromDate)
 
     fun insertData(noteVO: NoteVO) {

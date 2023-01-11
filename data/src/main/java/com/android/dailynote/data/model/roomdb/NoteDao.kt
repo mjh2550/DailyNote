@@ -10,7 +10,7 @@ import java.util.*
 @Dao
 interface NoteDao {
 
-    @Query("SELECT * FROM note_table ORDER BY note_id ASC")
+    @Query("SELECT * FROM note_table ORDER BY note_id DESC")
     fun getAllNoteList() : LiveData<List<NoteVO>>
 
     @Query("SELECT * FROM note_table " +
@@ -22,9 +22,12 @@ interface NoteDao {
     @Query("SELECT * FROM note_table " +
             "WHERE 1=1 "+
             "AND reg_time BETWEEN :toDate AND :fromDate "+
-            "ORDER BY note_id ASC")
+            "ORDER BY note_id DESC")
     fun getNoteListByDateList(toDate : Date, fromDate : Date) : List<NoteVO>
 
+    @Query("SELECT * FROM note_table " +
+           "WHERE note_id = :noteId")
+    fun getNoteContentsByNoteId(noteId : Long) : NoteVO
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(noteVO: NoteVO)
