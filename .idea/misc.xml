@@ -4,13 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/activity_home.xml" value="0.24635416666666668" />
+        <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/activity_main.xml" value="0.16927083333333334" />
         <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/activity_note_detail.xml" value="0.25" />
         <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/activity_note_view.xml" value="0.15833333333333333" />
         <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/activity_note_write.xml" value="0.14842958459979735" />
-        <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/fragment_home.xml" value="0.24635416666666668" />
+        <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/activity_test.xml" value="0.16927083333333334" />
+        <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/fragment_etc.xml" value="0.196875" />
+        <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/fragment_home.xml" value="0.159830866807611" />
         <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/fragment_note_list.xml" value="0.25" />
         <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/fragment_profile.xml" value="0.24635416666666668" />
         <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/list_item.xml" value="0.24635416666666668" />
+        <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/list_item2.xml" value="0.2864583333333333" />
         <entry key="..\:/dev/Android-DailyNote/DailyNote/app/src/main/res/layout/titlebar.xml" value="0.24635416666666668" />
         <entry key="app/src/main/res/drawable/borderline.xml" value="0.2025" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.188" />

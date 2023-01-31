@@ -2,7 +2,6 @@ package com.android.dailynote.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.dailynote.BuildConfig
 import com.android.dailynote.base.BaseViewModel
@@ -13,8 +12,6 @@ import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import java.util.*
 
 
@@ -34,8 +31,8 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     var deleteList = listOf<NoteVO>()
 
     fun loadData() = viewModelScope.launch {
-        val result = searchData()
-        _dataList.value = result
+        val searchResult = searchData()
+        _dataList.value = searchResult
 //        _dataList.postValue(result)
         isLoading.postValue(false)
     }
@@ -45,7 +42,6 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         deleteData()
         loadData()
     }
-
     private suspend fun searchData() = repository.getNoteListByDateList(toDate, fromDate)
     private suspend fun deleteData() = repository.deleteByList(deleteList = deleteList)
 

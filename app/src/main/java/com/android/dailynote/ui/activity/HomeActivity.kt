@@ -10,23 +10,25 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.android.dailynote.R
 import com.android.dailynote.base.BaseActivity
+import com.android.dailynote.base.BaseViewModel
 import com.android.dailynote.databinding.ActivityHomeBinding
 import com.android.dailynote.ui.viewmodel.HomeViewModel
+import com.android.dailynote.ui.viewmodel.MainViewModel
 
-class HomeActivity : BaseActivity<ActivityHomeBinding,HomeViewModel>() {
+class HomeActivity : BaseActivity<ActivityHomeBinding,MainViewModel>() {
     lateinit var navController: NavController
     lateinit var navHostFragment : NavHostFragment
 
     override fun getLayoutRes() = R.layout.activity_home
 
-    override val mViewModel : HomeViewModel by viewModels()
+    override val mViewModel = MainViewModel()
 
     override fun subscribeUi() {
         with(mViewModel){
 
         }
         with(mDataBinding){
-            vm = mViewModel
+
         }
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.findNavController()

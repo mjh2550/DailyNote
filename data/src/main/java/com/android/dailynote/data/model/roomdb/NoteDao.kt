@@ -21,6 +21,18 @@ interface NoteDao {
 
     @Query("SELECT * FROM note_table " +
             "WHERE 1=1 "+
+            "AND reg_time = date(:dayOfMonth) "+
+            "ORDER BY note_id ASC")
+    fun getNoteListByDayOfMonthFlow(dayOfMonth : Date) : Flow<List<NoteVO>>
+
+    @Query("SELECT * FROM note_table " +
+            "WHERE 1=1 "+
+            "AND reg_time = date(:dayOfMonth) "+
+            "ORDER BY note_id ASC")
+    fun getNoteListByDayOfMonth(dayOfMonth : Date) : List<NoteVO>
+
+    @Query("SELECT * FROM note_table " +
+            "WHERE 1=1 "+
             "AND reg_time BETWEEN :toDate AND :fromDate "+
             "ORDER BY note_id DESC")
     fun getNoteListByDateList(toDate : Date, fromDate : Date) : List<NoteVO>
