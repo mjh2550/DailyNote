@@ -24,8 +24,8 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     }
 
     //    val dataList = repository.getAllNoteList()
-    var toDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE,1)
-    var fromDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.FROM_DATE)
+    var toDate: Date = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE,1).time
+    var fromDate: Date = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.FROM_DATE).time
     private val _dataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())
     val dataList : LiveData<List<NoteVO>> get() = _dataList
     var deleteList = listOf<NoteVO>()

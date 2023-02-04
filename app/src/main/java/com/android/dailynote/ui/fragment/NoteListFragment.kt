@@ -52,7 +52,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         if(it.resultCode == Activity.RESULT_OK){
             val title = it.data?.getStringExtra("title")
             val contents = it.data?.getStringExtra("contents")
-            val now = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.NOW)
+            val now = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.NOW).time
             mDataBinding.vm?.insertData(NoteVO(
                 null,
                 title!!,

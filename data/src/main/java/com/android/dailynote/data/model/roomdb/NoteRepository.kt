@@ -30,13 +30,13 @@ class NoteRepository(applicationContext : Context){
 
     fun getNoteListByDateFlow(toDate:Date, fromDate: Date) = db.noteDao().getNoteListByDateFlow(toDate, fromDate)
 
-    suspend fun getNoteListByDayOfMonthFlow(dayOfMonth:Date)
+    suspend fun getNoteListByDayOfMonthFlow(pickToDate:Calendar, pickFromDate:Calendar)
             = withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
-        db.noteDao().getNoteListByDayOfMonthFlow(dayOfMonth)
+        db.noteDao().getNoteListByDayOfMonthFlow(pickToDate.timeInMillis, pickFromDate.timeInMillis)
     }
-    suspend fun getNoteListByDayOfMonth(dayOfMonth:Date)
+    suspend fun getNoteListByDayOfMonth(pickToDate:Calendar, pickFromDate:Calendar)
             = withContext(CoroutineScope(Dispatchers.Default).coroutineContext){
-        db.noteDao().getNoteListByDayOfMonth(dayOfMonth)
+        db.noteDao().getNoteListByDayOfMonth(pickToDate.timeInMillis, pickFromDate.timeInMillis)
     }
 
     fun insertData(noteVO: NoteVO) {

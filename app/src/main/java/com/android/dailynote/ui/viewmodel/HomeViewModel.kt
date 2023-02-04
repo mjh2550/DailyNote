@@ -16,22 +16,45 @@ class HomeViewModel(private val repository: NoteRepository) : BaseViewModel() {
 //    val noteList : LiveData<NoteVO> get() = _noteList
 //    private val _noteList = MutableLiveData<NoteVO>()
 
-    var pickDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(), DateType.NOW)
+    var pickToDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(), DateType.TO_DATE)
+    var pickFromDate = TimeClass().getCurrentTimeToDate(pickToDate, DateType.FROM_DATE)
+
     private val _pickDataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())
     val pickDataList : LiveData<List<NoteVO>> get() = _pickDataList
 
     fun loadValue() = viewModelScope.launch {
         val getPickResult = searchPickData()
         _pickDataList.value = getPickResult
+        println(getPickResult.size)
         }
 
-    private suspend fun searchPickData() = repository.getNoteListByDayOfMonth(pickDate)
-//    private suspend fun searchPickFlowData() = repository.getNoteListByDayOfMonthFlow(pickDate)
+    private suspend fun searchPickData() = repository.getNoteListByDayOfMonth(pickToDate,pickFromDate)
+//    private suspend fun searchPickFlowData() = repository.getNoteListByDayOfMonthFlow(pickToDate,pickFromDate)
 
     fun dateClick(year: Int, month: Int, dayOfMonth: Int){
-        // display the selected date in a Toast message
-        val msg = "$dayOfMonth/${month + 1}/$year"
-        println(msg)
-        // add any additional logic to handle date clicks here
+
+        //pick 한 날짜
+        pickToDate = Calendar.getInstance()
+        pickToDate.set(Calendar.YEAR, year)
+        pickToDate.set(Calendar.MONTH, month)
+        pickToDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        pickToDate.set(Calendar.HOUR_OF_DAY,0)
+        pickToDate.set(Calendar.MINUTE,0)
+        pickToDate.set(Calendar.SECOND,0)
+
+        pickFromDate = Calendar.getInstance()
+        pickFromDate.set(Calendar.YEAR, year)
+        pickFromDate.set(Calendar.MONTH, month)
+        pickFromDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        pickFromDate.set(Calendar.HOUR_OF_DAY,0)
+        pickFromDate.set(Calendar.MINUTE,0)
+        pickFromDate.set(Calendar.SECOND,0)
+        pickFromDate.add(Calendar.DAY_OF_MONTH , 1)
+        pickFromDate.add(Calendar.SECOND , -1)
+
+//        pickToDate = TimeClass().getCurrentTimeToDate(pickCal,DateType.TO_DATE)
+//        pickFromDate = TimeClass().getCurrentTimeToDate(pickToDate,DateType.FROM_DATE)
+
+        loadValue()
     }
 }

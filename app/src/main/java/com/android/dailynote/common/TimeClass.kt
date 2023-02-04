@@ -28,24 +28,26 @@ class TimeClass {
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun getCurrentTimeToDate(cal : Calendar, dateType: DateType, recentMonth: Int = 0): Date {
+    fun getCurrentTimeToDate(cal : Calendar, dateType: DateType, recentMonth: Int = 0): Calendar {
         cal.timeZone = timeZone
 
         return when (dateType) {
             DateType.TO_DATE -> {
-                cal.add(Calendar.MONTH, -recentMonth)
+                if(recentMonth != 0) cal.add(Calendar.MONTH, -recentMonth)
                 cal.set(Calendar.HOUR_OF_DAY,0)
                 cal.set(Calendar.MINUTE,0)
                 cal.set(Calendar.SECOND,0)
-                cal.time
+                cal
             }
             DateType.FROM_DATE -> {
-                cal.set(Calendar.HOUR_OF_DAY, 23)
-                cal.set(Calendar.MINUTE,59)
-                cal.set(Calendar.SECOND,59)
-                cal.time
+                cal.set(Calendar.HOUR_OF_DAY,0)
+                cal.set(Calendar.MINUTE,0)
+                cal.set(Calendar.SECOND,0)
+                cal.add(Calendar.DAY_OF_MONTH , 1)
+                cal.add(Calendar.SECOND , -1)
+                cal
             }
-            DateType.NOW -> cal.time
+            DateType.NOW -> cal
         }
     }
 
