@@ -25,7 +25,7 @@ class HomeViewModel(private val repository: NoteRepository) : BaseViewModel() {
     fun loadValue() = viewModelScope.launch {
         val getPickResult = searchPickData()
         _pickDataList.value = getPickResult
-        println(getPickResult.size)
+//        println(getPickResult.size)
         }
 
     private suspend fun searchPickData() = repository.getNoteListByDayOfMonth(pickToDate,pickFromDate)

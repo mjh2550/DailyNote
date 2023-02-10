@@ -1,16 +1,13 @@
 package com.android.dailynote.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.android.dailynote.R
 import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.databinding.ListItem2Binding
-import com.android.dailynote.databinding.ListItemBinding
+import java.text.SimpleDateFormat
 
 class HomeCalendarListAdapter(private val clickListener: HomeCalendarListListener)
     : androidx.recyclerview.widget.ListAdapter<NoteVO,HomeCalendarListAdapter.ViewHolder>(NoteListDiffCallback()) {
@@ -25,10 +22,12 @@ class HomeCalendarListAdapter(private val clickListener: HomeCalendarListListene
             }
         }
 
+        @SuppressLint("SimpleDateFormat")
         fun bind(item: NoteVO, clickListener: HomeCalendarListListener) {
+            val regTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(item.regTime) as String
             binding.tvCalNoteId.text = item.noteId.toString()
             binding.tvCalNoteTitle.text = item.noteTitle
-            binding.tvCalNoteDate.text = item.regTime.toString()
+            binding.tvCalNoteDate.text = regTime
             binding.noteVO = item
             binding.clickListener = clickListener
         }

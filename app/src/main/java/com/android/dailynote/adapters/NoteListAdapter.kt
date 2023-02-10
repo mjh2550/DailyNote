@@ -1,5 +1,6 @@
 package com.android.dailynote.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.android.dailynote.R
 import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.databinding.FragmentNoteListBinding
 import com.android.dailynote.databinding.ListItemBinding
+import java.text.SimpleDateFormat
 
 class NoteListAdapter(private val clickListener: NoteListListener)
     :androidx.recyclerview.widget.ListAdapter<NoteVO,NoteListAdapter.ListViewHolder>(NoteListDiffCallback()) {
@@ -27,10 +29,12 @@ class NoteListAdapter(private val clickListener: NoteListListener)
                return ListViewHolder(binding)
            }
        }
+       @SuppressLint("SimpleDateFormat")
        fun bind(item : NoteVO, clickListener: NoteListListener){
+           val regTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(item.regTime) as String
            binding.tvNoteId.text = item.noteId.toString()
            binding.tvNoteTitle.text = item.noteTitle
-           binding.tvNoteDate.text = item.regTime.toString()
+           binding.tvNoteDate.text = regTime
            binding.tvNoteWriter.text = item.noteWriter
            binding.tvNoteAttachYN.text = item.attachYN
            binding.tvNoteCommentYN.text = item.commentYN
