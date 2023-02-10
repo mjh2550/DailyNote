@@ -53,6 +53,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
                 it?.let {
                     adapter.submitList(it)
                 }
+
+                if(it.isEmpty()){
+                    mDataBinding.viewNoSearchData.root.visibility = View.VISIBLE
+                    mDataBinding.recyclerView.visibility = View.GONE
+                } else {
+                    mDataBinding.recyclerView.visibility = View.VISIBLE
+                    mDataBinding.viewNoSearchData.root.visibility = View.GONE
+                }
             }
         }
         with(mDataBinding){
@@ -61,8 +69,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
             recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
                 mViewModel.dateClick(year, month, dayOfMonth)
-//                mViewModel.loadValue()
-//                adapter.notifyDataSetChanged()
             }
 
         }

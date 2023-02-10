@@ -31,11 +31,20 @@
             android:layout_weight="0.5"
             />
 
+       <include
+            android:id="@+id/viewNoSearchData"
+            layout="@layout/view_no_search_data"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.5"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
