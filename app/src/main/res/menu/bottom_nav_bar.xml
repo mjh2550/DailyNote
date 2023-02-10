@@ -3,22 +3,22 @@
     <item
         android:id="@+id/fragment_home"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="홈"/>
+        android:icon="@drawable/ic_baseline_calendar_month_24"
+        android:title="@string/bottomNavBarMenu1"/>
     <item
         android:id="@+id/fragment_note_list"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="일기장 목록" />
+        android:icon="@drawable/ic_baseline_list_24"
+        android:title="@string/bottomNavBarMenu2" />
     <item
         android:id="@+id/fragment_profile"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="내 정보" />
+        android:icon="@drawable/ic_baseline_supervisor_account_24"
+        android:title="@string/bottomNavBarMenu3" />
     <item
         android:id="@+id/fragment_etc"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="기타" />
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/bottomNavBarMenu4" />
 
 </menu>
