@@ -1,19 +1,13 @@
 package com.android.dailynote.ui.activity
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import androidx.activity.viewModels
+import android.view.MenuItem
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.android.dailynote.R
 import com.android.dailynote.base.BaseActivity
 import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.databinding.ActivityNoteDetailBinding
 import com.android.dailynote.ui.viewmodel.NoteDetailViewModel
-import com.android.dailynote.ui.viewmodel.NoteListViewModel
-import com.android.dailynote.ui.viewmodel.NoteViewViewModel
 
 class NoteDetailActivity : BaseActivity<ActivityNoteDetailBinding,NoteDetailViewModel>() {
     override fun getLayoutRes()= R.layout.activity_note_detail
@@ -34,10 +28,24 @@ class NoteDetailActivity : BaseActivity<ActivityNoteDetailBinding,NoteDetailView
         }
         with(mDataBinding){
             vm = mViewModel
+            setSupportActionBar(titleBar.toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
         mViewModel.noteContents.observe(this@NoteDetailActivity){
+            mDataBinding.titleBar.toolbar.title = it.noteTitle
             mDataBinding.tvNoteTitle.text = it.noteTitle
             mDataBinding.tvNoteContents.text = it.noteContents
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                //toolbar의 back키 눌렀을 때 동작
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
