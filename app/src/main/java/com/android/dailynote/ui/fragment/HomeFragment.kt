@@ -20,6 +20,7 @@ import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.databinding.FragmentHomeBinding
 import com.android.dailynote.ui.viewmodel.HomeViewModel
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
+import kotlinx.coroutines.delay
 
 class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
     override val mViewModel: HomeViewModel by lazy {
@@ -56,9 +57,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
 
                 if(it.isEmpty()){
                     mDataBinding.viewNoSearchData.root.visibility = View.VISIBLE
-                    mDataBinding.recyclerView.visibility = View.GONE
+//                    mDataBinding.recyclerView.visibility = View.GONE
                 } else {
-                    mDataBinding.recyclerView.visibility = View.VISIBLE
+//                    mDataBinding.recyclerView.visibility = View.VISIBLE
                     mDataBinding.viewNoSearchData.root.visibility = View.GONE
                 }
             }

@@ -38,7 +38,6 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     }
 
     fun deleteList() = viewModelScope.launch {
-        isLoading.postValue(true)
         deleteData()
         loadData()
     }
@@ -54,7 +53,10 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         println("OK")
     }
 
-    fun clickBtnSearch() = loadData()
+    fun onClickBtnSearch() {
+        isLoading.postValue(true)
+        loadData()
+    }
 
     fun onCheckBoxAllChanged(isChecked : Boolean){
         if(dataList.value != null && dataList.value!!.isNotEmpty()) {

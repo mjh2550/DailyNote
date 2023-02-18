@@ -167,6 +167,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 startForResult.launch(intent)
             }
             R.id.btn_del-> {
+                mViewModel.isLoading.value = true
                 val list = mutableListOf<NoteVO>()
                 var cnt = 0;
                 for (noteVo in mDataBinding.vm?.dataList?.value!!){

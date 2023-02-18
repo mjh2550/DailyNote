@@ -68,7 +68,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.1"
             android:backgroundTint="@color/navy"
-            android:onClick="@{() -> vm.clickBtnSearch()}"
+            android:onClick="@{() -> vm.onClickBtnSearch()}"
             android:src="@drawable/ic_baseline_search_24"
             app:tint="@color/white" />
 

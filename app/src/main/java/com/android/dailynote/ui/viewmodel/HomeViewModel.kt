@@ -8,6 +8,7 @@ import com.android.dailynote.common.DateType
 import com.android.dailynote.common.TimeClass
 import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.data.model.roomdb.NoteRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -26,13 +27,14 @@ class HomeViewModel(private val repository: NoteRepository) : BaseViewModel() {
         val getPickResult = searchPickData()
         _pickDataList.value = getPickResult
 //        println(getPickResult.size)
+        isLoading.postValue(false)
         }
 
     private suspend fun searchPickData() = repository.getNoteListByDayOfMonth(pickToDate,pickFromDate)
 //    private suspend fun searchPickFlowData() = repository.getNoteListByDayOfMonthFlow(pickToDate,pickFromDate)
 
     fun dateClick(year: Int, month: Int, dayOfMonth: Int){
-
+        isLoading.postValue(true)
         //pick 한 날짜
         pickToDate = Calendar.getInstance()
         pickToDate.set(Calendar.YEAR, year)
