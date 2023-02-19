@@ -21,6 +21,7 @@ import com.android.dailynote.databinding.FragmentHomeBinding
 import com.android.dailynote.ui.viewmodel.HomeViewModel
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
 import kotlinx.coroutines.delay
+import java.util.Calendar
 
 class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
     override val mViewModel: HomeViewModel by lazy {
@@ -49,7 +50,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
         )
 
         with(mViewModel){
-            loadValue()
+//            loadValue()
+            val now = Calendar.getInstance()
+            mViewModel.dateClick(now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH))
+
             pickDataList.observe(viewLifecycleOwner){
                 it?.let {
                     adapter.submitList(it)

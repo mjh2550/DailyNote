@@ -23,7 +23,7 @@ class HomeViewModel(private val repository: NoteRepository) : BaseViewModel() {
     private val _pickDataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())
     val pickDataList : LiveData<List<NoteVO>> get() = _pickDataList
 
-    fun loadValue() = viewModelScope.launch {
+    private fun loadValue() = viewModelScope.launch {
         val getPickResult = searchPickData()
         _pickDataList.value = getPickResult
 //        println(getPickResult.size)
