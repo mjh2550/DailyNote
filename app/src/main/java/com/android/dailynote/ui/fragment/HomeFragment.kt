@@ -40,7 +40,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
             HomeCalendarListListener { v,vo,type ->
                 when(type){
                     EventType.ON_BUTTON_CLICK -> {
-                        println("ON_BUTTON_CLICK")
+                        println("${vo?.noteId} , $type")
                     }
                     else -> {
 

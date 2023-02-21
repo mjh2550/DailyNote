@@ -24,6 +24,7 @@
             android:layout_margin="2dp"
             android:background="@drawable/borderline"
             android:orientation="horizontal"
+            android:onClick="@{(v) -> clickListener.onClick(v,noteVO)}"
             android:weightSum="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,6 +39,28 @@
                 android:fontFamily="@font/bmdh"
                 android:gravity="center"
                 android:hint="id"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:fontFamily="@font/bmdh"
+                android:gravity="center"
+                android:text="*"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/tv_cal_note_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:fontFamily="@font/bmdh"
+                android:gravity="center"
+                android:hint="title"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
@@ -52,16 +75,6 @@
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
-            <TextView
-                android:id="@+id/tv_cal_note_title"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:fontFamily="@font/bmdh"
-                android:gravity="center"
-                android:hint="title"
-                android:textColor="@color/black"
-                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/tv_cal_note_writer"

@@ -38,6 +38,7 @@
                 "@{(cb,isChecked) -> clickListener.onClickCheckBoxChanged(cb,isChecked,noteVO)}"
             android:layout_height="match_parent"/>
 
+
         <TextView
             android:id="@+id/tv_note_id"
             android:onClick="@{(v) -> clickListener.onClick(v,noteVO)}"
@@ -46,7 +47,7 @@
             android:layout_weight="0.1"
             android:fontFamily="@font/bmdh"
             android:gravity="center"
-            android:hint="id"
+            android:visibility="gone"
             android:textColor="@color/black"
             android:textSize="12dp" />
 
@@ -55,7 +56,7 @@
             android:onClick="@{(v) -> clickListener.onClick(v,noteVO)}"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
+            android:layout_weight="0.6"
             android:fontFamily="@font/bmdh"
             android:gravity="center"
             android:hint="title"
@@ -68,6 +69,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:fontFamily="@font/bmdh"
+            android:onClick="@{(v) -> clickListener.onClick(v,noteVO)}"
             android:gravity="center"
             android:hint="YY/MM/DD HH:MM:SS"
             android:textColor="@color/black"
