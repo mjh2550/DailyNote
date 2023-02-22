@@ -74,8 +74,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
             vm = mViewModel
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-                mViewModel.dateClick(year, month, dayOfMonth)
+            calendarView.setOnDateChangedListener { widget, date, selected ->
+                mViewModel.dateClick(date.year, date.month, date.day)
             }
 
         }

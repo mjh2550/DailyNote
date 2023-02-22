@@ -25,12 +25,13 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <CalendarView
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5"
-            />
+            app:mcv_selectionColor="#a9dbf0cb"
+            app:mcv_showOtherDates="defaults"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
