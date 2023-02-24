@@ -48,11 +48,6 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     fun deleteAll() = repository.deleteAll()
     fun deleteById(noteId: Int) = repository.deleteById(noteId)
 
-    //TODO DELETE
-    fun click() {
-        println("OK")
-    }
-
     fun onClickBtnSearch() {
         isLoading.postValue(true)
         loadData()
