@@ -15,10 +15,8 @@
     <LinearLayout
         android:id="@+id/topTabBar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/navy"
+        android:layout_height="50dp"
         android:orientation="horizontal"
-        android:padding="1dp"
         android:weightSum="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,28 +24,33 @@
 
         <CheckBox
             android:id="@+id/cb_all_check"
+            android:background="@drawable/search_bar_borderline"
             android:layout_width="0dp"
+            android:layout_margin="1dp"
             android:layout_height="match_parent"
+            android:buttonTint="@color/blue"
             android:layout_weight="0.1" />
 
         <!-- 날짜 , 검색어 , 검색 버튼 -->
         <Button
             android:id="@+id/btn_to_date"
+            android:layout_margin="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:background="@color/alpha_100"
+            android:background="@drawable/search_bar_borderline"
             android:text="To_Date"
-            android:textColor="@color/white" />
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/btn_from_date"
+            android:layout_margin="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:background="@color/alpha_100"
+            android:background="@drawable/search_bar_borderline"
             android:text="From_Date"
-            android:textColor="@color/white" />
+            android:textColor="@color/black" />
 
         <!--<EditText
             android:layout_weight="0.3"
@@ -59,13 +62,14 @@
 
         <ImageButton
             android:id="@+id/btn_search"
+            android:layout_margin="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.1"
-            android:backgroundTint="@color/navy"
+            android:background="@drawable/search_bar_borderline"
             android:onClick="@{() -> vm.onClickBtnSearch()}"
             android:src="@drawable/ic_baseline_search_24"
-            app:tint="@color/white" />
+            app:tint="@color/black" />
 
 
     </LinearLayout>

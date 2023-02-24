@@ -34,6 +34,7 @@
             android:id="@+id/cb_check"
             android:layout_weight="0.1"
             android:layout_width="0dp"
+            android:buttonTint="@color/blue"
             android:onCheckedChanged=
                 "@{(cb,isChecked) -> clickListener.onClickCheckBoxChanged(cb,isChecked,noteVO)}"
             android:layout_height="match_parent"/>
