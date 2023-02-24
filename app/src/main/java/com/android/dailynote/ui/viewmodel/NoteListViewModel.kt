@@ -23,6 +23,7 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         private val myRef = database.getReference("daily_note")
     }
 
+    val titleName = "일기장 목록"
     //    val dataList = repository.getAllNoteList()
     var toDate: Date = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE,1).time
     var fromDate: Date = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.FROM_DATE).time

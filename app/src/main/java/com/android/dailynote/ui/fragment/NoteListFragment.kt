@@ -11,8 +11,10 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.CalendarView
 import android.widget.CompoundButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -97,7 +99,8 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     override fun getLayoutRes() = R.layout.fragment_note_list
 
     override fun subscribeUi() {
-
+        val titleText = activity?.findViewById(R.id.title_text) as TextView
+        titleText.text = mViewModel.titleName
         val adapter = NoteListAdapter(
             NoteListListener { _, isChecked, noteVO, eventType ->
                 when(eventType){

@@ -34,7 +34,7 @@ class NoteWriteActivity : BaseActivity<ActivityNoteWriteBinding,NoteWriteViewMod
         }
         with(mDataBinding){
             vm = mViewModel
-            titleBar.toolbar.title = "일기장 작성"
+            noteWriteTitleBar.titleText.text = "일기장 작성"
             btnCancel.setOnClickListener(this@NoteWriteActivity)
             btnSave.setOnClickListener(this@NoteWriteActivity)
         }

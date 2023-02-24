@@ -3,7 +3,10 @@ package com.android.dailynote.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.children
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -15,13 +18,11 @@ import com.android.dailynote.adapters.HomeCalendarListAdapter
 import com.android.dailynote.adapters.HomeCalendarListListener
 import com.android.dailynote.base.BaseFragment
 import com.android.dailynote.common.EventType
-import com.android.dailynote.common.TimeClass
 import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.databinding.FragmentHomeBinding
 import com.android.dailynote.ui.viewmodel.HomeViewModel
-import com.android.dailynote.ui.viewmodel.NoteListViewModel
-import kotlinx.coroutines.delay
-import java.util.Calendar
+import java.util.*
+
 
 class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
     override val mViewModel: HomeViewModel by lazy {
@@ -36,6 +37,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun subscribeUi() {
+        val titleText = activity?.findViewById(R.id.title_text) as TextView
+        titleText.text = mViewModel.titleName
         val adapter = HomeCalendarListAdapter(
             HomeCalendarListListener { v,vo,type ->
                 when(type){

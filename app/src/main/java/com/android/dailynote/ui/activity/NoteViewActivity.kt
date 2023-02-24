@@ -19,7 +19,7 @@ class NoteViewActivity : BaseActivity<ActivityNoteViewBinding,NoteViewViewModel>
         }
         with(mDataBinding){
             vm = mViewModel
-            titleBar.toolbar.title = "일기장 조회"
+            noteViewTitleBar.toolbar.title = "일기장 조회"
         }
     }
 

@@ -28,11 +28,11 @@ class NoteDetailActivity : BaseActivity<ActivityNoteDetailBinding,NoteDetailView
         }
         with(mDataBinding){
             vm = mViewModel
-            setSupportActionBar(titleBar.toolbar)
+            setSupportActionBar(detailTitleBar.toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
         mViewModel.noteContents.observe(this@NoteDetailActivity){
-            mDataBinding.titleBar.toolbar.title = it.noteTitle
+            mDataBinding.detailTitleBar.titleText.text = it.noteTitle
             mDataBinding.tvNoteTitle.text = it.noteTitle
             mDataBinding.tvNoteContents.text = it.noteContents
         }

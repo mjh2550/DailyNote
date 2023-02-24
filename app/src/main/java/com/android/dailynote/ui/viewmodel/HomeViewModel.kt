@@ -16,6 +16,7 @@ class HomeViewModel(private val repository: NoteRepository) : BaseViewModel() {
 
 //    val noteList : LiveData<NoteVO> get() = _noteList
 //    private val _noteList = MutableLiveData<NoteVO>()
+    val titleName = "캘린더"
 
     var pickToDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(), DateType.TO_DATE)
     var pickFromDate = TimeClass().getCurrentTimeToDate(pickToDate, DateType.FROM_DATE)
