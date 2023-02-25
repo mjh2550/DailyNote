@@ -1,12 +1,10 @@
 package com.android.dailynote.ui.fragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.children
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -20,6 +18,7 @@ import com.android.dailynote.base.BaseFragment
 import com.android.dailynote.common.EventType
 import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.databinding.FragmentHomeBinding
+import com.android.dailynote.ui.activity.NoteDetailActivity
 import com.android.dailynote.ui.viewmodel.HomeViewModel
 import java.util.*
 
@@ -37,13 +36,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun subscribeUi() {
+        //로드 시 데이터 처리
         val titleText = activity?.findViewById(R.id.title_text) as TextView
         titleText.text = mViewModel.titleName
+
+        val now = Calendar.getInstance()
+        mViewModel.dateClick(now.get(Calendar.YEAR),
+            now.get(Calendar.MONTH),
+            now.get(Calendar.DAY_OF_MONTH))
+
+
         val adapter = HomeCalendarListAdapter(
             HomeCalendarListListener { v,vo,type ->
                 when(type){
                     EventType.ON_BUTTON_CLICK -> {
-                        println("${vo?.noteId} , $type")
+                        val intent = Intent(requireActivity(), NoteDetailActivity::class.java)
+                        intent.putExtra("NOTE_ID", vo?.noteId)
+                        startActivity(intent)
                     }
                     else -> {
 
@@ -52,24 +61,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
             }
         )
 
-        with(mViewModel){
-//            loadValue()
-            val now = Calendar.getInstance()
-            mViewModel.dateClick(now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH))
+//        val adapter2 = HomeCalendarListAdapter(
+//            HomeCalendarListListener { v,vo,type ->
+//               println("${vo?.noteId} , $type")
+//            }
+//        )
 
-            pickDataList.observe(viewLifecycleOwner){
+        with(mViewModel){
+            pickDayDataList.observe(viewLifecycleOwner){
                 it?.let {
                     adapter.submitList(it)
                 }
 
                 if(it.isEmpty()){
                     mDataBinding.viewNoSearchData.root.visibility = View.VISIBLE
-//                    mDataBinding.recyclerView.visibility = View.GONE
                 } else {
-//                    mDataBinding.recyclerView.visibility = View.VISIBLE
                     mDataBinding.viewNoSearchData.root.visibility = View.GONE
+                }
+            }
+
+            pickMonthDataList.observe(viewLifecycleOwner){
+//                it?.let {
+//                    adapter2.submitList(it)
+//                }
+
+                //캘린더 데이터 표시 처리
+                if(it.isEmpty()){
+
+                }else{
+                    println("${it.size}")
                 }
             }
         }
@@ -77,8 +97,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
             vm = mViewModel
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            calendarView.setOnDateChangedListener { widget, date, selected ->
+            calendarView.setOnDateChangedListener { _, date, _ ->
                 mViewModel.dateClick(date.year, date.month, date.day)
+            }
+            calendarView.setOnMonthChangedListener { _, date ->
+                mViewModel.monthClick(date.year, date.month)
             }
 
         }

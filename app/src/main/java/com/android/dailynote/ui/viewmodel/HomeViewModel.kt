@@ -8,7 +8,6 @@ import com.android.dailynote.common.DateType
 import com.android.dailynote.common.TimeClass
 import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.data.model.roomdb.NoteRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -21,15 +20,26 @@ class HomeViewModel(private val repository: NoteRepository) : BaseViewModel() {
     var pickToDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(), DateType.TO_DATE)
     var pickFromDate = TimeClass().getCurrentTimeToDate(pickToDate, DateType.FROM_DATE)
 
-    private val _pickDataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())
-    val pickDataList : LiveData<List<NoteVO>> get() = _pickDataList
+    private val _pickDayDataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())
+    private val _pickMonthDataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())
+    val pickDayDataList : LiveData<List<NoteVO>> get() = _pickDayDataList
+    val pickMonthDataList : LiveData<List<NoteVO>> get() = _pickMonthDataList
 
-    private fun loadValue() = viewModelScope.launch {
-        val getPickResult = searchPickData()
-        _pickDataList.value = getPickResult
-//        println(getPickResult.size)
-        isLoading.postValue(false)
+    private fun loadDayValue() {
+        viewModelScope.launch {
+            val getPickResult = searchPickData()
+            _pickDayDataList.value = getPickResult
+            isLoading.postValue(false)
         }
+    }
+
+    private fun loadMonthValue() {
+        viewModelScope.launch {
+            val getPickResult = searchPickData()
+            _pickMonthDataList.value = getPickResult
+            isLoading.postValue(false)
+        }
+    }
 
     private suspend fun searchPickData() = repository.getNoteListByDayOfMonth(pickToDate,pickFromDate)
 //    private suspend fun searchPickFlowData() = repository.getNoteListByDayOfMonthFlow(pickToDate,pickFromDate)
@@ -55,9 +65,29 @@ class HomeViewModel(private val repository: NoteRepository) : BaseViewModel() {
         pickFromDate.add(Calendar.DAY_OF_MONTH , 1)
         pickFromDate.add(Calendar.SECOND , -1)
 
-//        pickToDate = TimeClass().getCurrentTimeToDate(pickCal,DateType.TO_DATE)
-//        pickFromDate = TimeClass().getCurrentTimeToDate(pickToDate,DateType.FROM_DATE)
+        loadDayValue()
+    }
 
-        loadValue()
+    fun monthClick(year: Int, month: Int){
+        isLoading.postValue(true)
+
+        pickToDate = Calendar.getInstance()
+        pickToDate.set(Calendar.YEAR, year)
+        pickToDate.set(Calendar.MONTH, month)
+        pickToDate.set(Calendar.DAY_OF_MONTH,1)
+        pickToDate.set(Calendar.HOUR_OF_DAY,0)
+        pickToDate.set(Calendar.MINUTE,0)
+        pickToDate.set(Calendar.SECOND,0)
+
+        pickFromDate = Calendar.getInstance()
+        pickFromDate.set(Calendar.YEAR, year)
+        pickFromDate.set(Calendar.MONTH, month)
+        pickFromDate.set(Calendar.HOUR_OF_DAY, 1)
+        pickFromDate.set(Calendar.MINUTE,0)
+        pickFromDate.set(Calendar.SECOND,0)
+        pickFromDate.add(Calendar.DAY_OF_MONTH, 1)
+        pickFromDate.add(Calendar.SECOND , -1)
+
+        loadMonthValue()
     }
 }
