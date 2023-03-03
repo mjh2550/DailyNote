@@ -39,10 +39,9 @@ class NoteRepository(applicationContext : Context){
         db.noteDao().getNoteListByDayOfMonth(pickToDate.timeInMillis, pickFromDate.timeInMillis)
     }
 
-    fun insertData(noteVO: NoteVO) {
-        CoroutineScope(Dispatchers.IO).launch {
-            db.noteDao().insert(noteVO = noteVO)
-        }
+    suspend fun insertData(noteVO: NoteVO)
+        = withContext(CoroutineScope(Dispatchers.Default).coroutineContext){
+        db.noteDao().insert(noteVO = noteVO)
     }
 
     fun deleteAll()  {

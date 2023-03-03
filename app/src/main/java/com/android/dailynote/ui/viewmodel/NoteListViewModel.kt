@@ -30,6 +30,11 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
     private val _dataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())
     val dataList : LiveData<List<NoteVO>> get() = _dataList
     var deleteList = listOf<NoteVO>()
+    private var insertVO : NoteVO? = null
+
+    private suspend fun searchData() = repository.getNoteListByDateList(toDate, fromDate)
+    private suspend fun deleteData() = repository.deleteByList(deleteList = deleteList)
+    private suspend fun insertData() = repository.insertData(insertVO!!)
 
     fun loadData() = viewModelScope.launch {
         val searchResult = searchData()
@@ -42,10 +47,13 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
         deleteData()
         loadData()
     }
-    private suspend fun searchData() = repository.getNoteListByDateList(toDate, fromDate)
-    private suspend fun deleteData() = repository.deleteByList(deleteList = deleteList)
 
-    fun insertData(noteVO: NoteVO) = repository.insertData(noteVO)
+    fun insertData(noteVO: NoteVO) = viewModelScope.launch {
+        insertVO = noteVO
+        insertData()
+        loadData()
+    }
+
     fun deleteAll() = repository.deleteAll()
     fun deleteById(noteId: Int) = repository.deleteById(noteId)
 
@@ -62,5 +70,4 @@ class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel(
             }
         }
     }
-
 }

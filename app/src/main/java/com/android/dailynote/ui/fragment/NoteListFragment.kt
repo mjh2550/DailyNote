@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.dailynote.R
@@ -55,7 +56,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             val title = it.data?.getStringExtra("title")
             val contents = it.data?.getStringExtra("contents")
             val now = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.NOW).time
-            mDataBinding.vm?.insertData(NoteVO(
+            mViewModel.insertData(NoteVO(
                 null,
                 title!!,
                 contents!!,
@@ -69,8 +70,8 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                 now,
                 false,
             ))
-            mDataBinding.vm?.loadData()
             mDataBinding.lvNoteItem.adapter?.notifyDataSetChanged()
+//            mViewModel.loadData()
 
         } else {
             ErrorUtil.showErrorMessage(requireActivity(),getString(R.string.msg_save_fail)) {
