@@ -20,6 +20,9 @@ import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.databinding.FragmentHomeBinding
 import com.android.dailynote.ui.activity.NoteDetailActivity
 import com.android.dailynote.ui.viewmodel.HomeViewModel
+import com.android.dailynote.util.CalendarDecorator
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,7 +38,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
 
     override fun getLayoutRes() = R.layout.fragment_home
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "SimpleDateFormat")
     override fun subscribeUi() {
         //로드 시 데이터 처리
         val titleText = activity?.findViewById(R.id.title_text) as TextView
@@ -88,13 +91,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
 
                 //캘린더 데이터 표시 처리
                 if(it.isNotEmpty()){
-                    println("${it.size}")
+                    val calList = ArrayList<CalendarDay>()
                     for(noteVO in it){
-                        println("id : ${noteVO.noteId}")
                         val editTime = noteVO.editTime
-                        val sdfTime = SimpleDateFormat("yyyy-MM-dd").format(editTime)
-
+                        val sdfYear = SimpleDateFormat("yyyy").format(editTime)
+                        val sdfMonth = SimpleDateFormat("MM").format(editTime)
+                        val sdfDay = SimpleDateFormat("dd").format(editTime)
+                        calList.add(CalendarDay.from(sdfYear.toInt(), sdfMonth.toInt() - 1, sdfDay.toInt()))
                     }
+                    mDataBinding.calendarView.addDecorator(CalendarDecorator(requireActivity(),calList))
                 }
             }
         }
