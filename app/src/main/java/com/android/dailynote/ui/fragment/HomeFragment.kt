@@ -77,18 +77,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
                     adapter.submitList(it)
                 }
 
-                if(it.isEmpty()){
-                    mDataBinding.viewNoSearchData.root.visibility = View.VISIBLE
-                } else {
+                if(it.isNotEmpty()){
                     mDataBinding.viewNoSearchData.root.visibility = View.GONE
+                    val calList = ArrayList<CalendarDay>()
+                    for(noteVO in it){
+                        val editTime = noteVO.editTime
+                        val sdfYear = SimpleDateFormat("yyyy").format(editTime)
+                        val sdfMonth = SimpleDateFormat("MM").format(editTime)
+                        val sdfDay = SimpleDateFormat("dd").format(editTime)
+                        calList.add(CalendarDay.from(sdfYear.toInt(), sdfMonth.toInt() - 1, sdfDay.toInt()))
+                    }
+                    mDataBinding.calendarView.addDecorator(CalendarDecorator(requireActivity(),calList))
+                } else {
+                    mDataBinding.viewNoSearchData.root.visibility = View.VISIBLE
                 }
             }
 
             pickMonthDataList.observe(viewLifecycleOwner){
-//                it?.let {
-//                    adapter2.submitList(it)
-//                }
-
                 //캘린더 데이터 표시 처리
                 if(it.isNotEmpty()){
                     val calList = ArrayList<CalendarDay>()
