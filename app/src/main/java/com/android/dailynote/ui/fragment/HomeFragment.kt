@@ -20,6 +20,7 @@ import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.databinding.FragmentHomeBinding
 import com.android.dailynote.ui.activity.NoteDetailActivity
 import com.android.dailynote.ui.viewmodel.HomeViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -86,10 +87,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
 //                }
 
                 //캘린더 데이터 표시 처리
-                if(it.isEmpty()){
-
-                }else{
+                if(it.isNotEmpty()){
                     println("${it.size}")
+                    for(noteVO in it){
+                        println("id : ${noteVO.noteId}")
+                        val editTime = noteVO.editTime
+                        val sdfTime = SimpleDateFormat("yyyy-MM-dd").format(editTime)
+
+                    }
                 }
             }
         }

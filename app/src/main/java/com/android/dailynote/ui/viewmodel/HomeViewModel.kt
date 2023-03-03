@@ -17,8 +17,10 @@ class HomeViewModel(private val repository: NoteRepository) : BaseViewModel() {
 //    private val _noteList = MutableLiveData<NoteVO>()
     val titleName = "캘린더"
 
-    var pickToDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(), DateType.TO_DATE)
-    var pickFromDate = TimeClass().getCurrentTimeToDate(pickToDate, DateType.FROM_DATE)
+    private var pickToDate = TimeClass().getCurrentTimeToDate(Calendar.getInstance(), DateType.TO_DATE)
+    private var pickFromDate = TimeClass().getCurrentTimeToDate(pickToDate, DateType.FROM_DATE)
+    private var pickToMonthDate = Calendar.getInstance()
+    private var pickFromMonthDate = Calendar.getInstance()
 
     private val _pickDayDataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())
     private val _pickMonthDataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())
@@ -27,21 +29,24 @@ class HomeViewModel(private val repository: NoteRepository) : BaseViewModel() {
 
     private fun loadDayValue() {
         viewModelScope.launch {
-            val getPickResult = searchPickData()
-            _pickDayDataList.value = getPickResult
+            _pickDayDataList.value = searchPickDayData()
             isLoading.postValue(false)
         }
     }
 
     private fun loadMonthValue() {
         viewModelScope.launch {
-            val getPickResult = searchPickData()
-            _pickMonthDataList.value = getPickResult
+            _pickMonthDataList.value = searchPickMonthData()
             isLoading.postValue(false)
         }
     }
 
-    private suspend fun searchPickData() = repository.getNoteListByDayOfMonth(pickToDate,pickFromDate)
+    private suspend fun searchPickDayData() = repository.getNoteListByDayOfMonth(pickToDate,pickFromDate)
+    private suspend fun searchPickMonthData() : List<NoteVO> {
+        println("${pickToMonthDate.time} ${pickToMonthDate.timeInMillis}")
+        println("${pickFromMonthDate.time} ${pickFromMonthDate.timeInMillis}")
+        return repository.getNoteListByDayOfMonth(pickToMonthDate,pickFromMonthDate)
+    }
 //    private suspend fun searchPickFlowData() = repository.getNoteListByDayOfMonthFlow(pickToDate,pickFromDate)
 
     fun dateClick(year: Int, month: Int, dayOfMonth: Int){
@@ -71,22 +76,23 @@ class HomeViewModel(private val repository: NoteRepository) : BaseViewModel() {
     fun monthClick(year: Int, month: Int){
         isLoading.postValue(true)
 
-        pickToDate = Calendar.getInstance()
-        pickToDate.set(Calendar.YEAR, year)
-        pickToDate.set(Calendar.MONTH, month)
-        pickToDate.set(Calendar.DAY_OF_MONTH,1)
-        pickToDate.set(Calendar.HOUR_OF_DAY,0)
-        pickToDate.set(Calendar.MINUTE,0)
-        pickToDate.set(Calendar.SECOND,0)
+        pickToMonthDate = Calendar.getInstance()
+        pickToMonthDate.set(Calendar.YEAR, year)
+        pickToMonthDate.set(Calendar.MONTH, month)
+        pickToMonthDate.set(Calendar.DAY_OF_MONTH,1)
+        pickToMonthDate.set(Calendar.HOUR_OF_DAY,0)
+        pickToMonthDate.set(Calendar.MINUTE,0)
+        pickToMonthDate.set(Calendar.SECOND,0)
 
-        pickFromDate = Calendar.getInstance()
-        pickFromDate.set(Calendar.YEAR, year)
-        pickFromDate.set(Calendar.MONTH, month)
-        pickFromDate.set(Calendar.HOUR_OF_DAY, 1)
-        pickFromDate.set(Calendar.MINUTE,0)
-        pickFromDate.set(Calendar.SECOND,0)
-        pickFromDate.add(Calendar.DAY_OF_MONTH, 1)
-        pickFromDate.add(Calendar.SECOND , -1)
+        pickFromMonthDate = Calendar.getInstance()
+        pickFromMonthDate.set(Calendar.YEAR, year)
+        pickFromMonthDate.set(Calendar.MONTH, month)
+        pickFromMonthDate.set(Calendar.DAY_OF_MONTH, 1)
+        pickFromMonthDate.set(Calendar.HOUR_OF_DAY,0)
+        pickFromMonthDate.set(Calendar.MINUTE,0)
+        pickFromMonthDate.set(Calendar.SECOND,0)
+        pickFromMonthDate.add(Calendar.MONTH, 1)
+        pickFromMonthDate.add(Calendar.SECOND , -1)
 
         loadMonthValue()
     }
