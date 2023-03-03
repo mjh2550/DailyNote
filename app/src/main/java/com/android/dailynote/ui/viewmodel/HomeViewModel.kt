@@ -42,11 +42,8 @@ class HomeViewModel(private val repository: NoteRepository) : BaseViewModel() {
     }
 
     private suspend fun searchPickDayData() = repository.getNoteListByDayOfMonth(pickToDate,pickFromDate)
-    private suspend fun searchPickMonthData() : List<NoteVO> {
-        println("${pickToMonthDate.time} ${pickToMonthDate.timeInMillis}")
-        println("${pickFromMonthDate.time} ${pickFromMonthDate.timeInMillis}")
-        return repository.getNoteListByDayOfMonth(pickToMonthDate,pickFromMonthDate)
-    }
+    private suspend fun searchPickMonthData() = repository.getNoteListByDayOfMonth(pickToMonthDate,pickFromMonthDate)
+
 //    private suspend fun searchPickFlowData() = repository.getNoteListByDayOfMonthFlow(pickToDate,pickFromDate)
 
     fun dateClick(year: Int, month: Int, dayOfMonth: Int){
