@@ -6,14 +6,14 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.android.dailynote"
         minSdk 28
-        targetSdk 32
+        targetSdk 33
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "FIREBASE_URL", '"https://dailynote-d82f5-default-rtdb.firebaseio.com/"'
@@ -23,6 +23,25 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions += "version"
+    productFlavors {
+        free {
+            dimension = "version"
+            applicationIdSuffix = ".free"
+            manifestPlaceholders = [
+                appName: "@string/app_name",
+                appUseAds : "true"
+            ]
+        }
+        pro {
+            dimension = "version"
+            applicationIdSuffix = ".pro"
+            manifestPlaceholders = [
+                appName: "@string/app_name",
+                appUseAds : "false"
+            ]
         }
     }
     compileOptions {
