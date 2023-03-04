@@ -3,7 +3,7 @@ package com.android.dailynote.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.android.dailynote.BuildConfig
+import com.android.dailynote.base.BaseApplication
 import com.android.dailynote.base.BaseViewModel
 import com.android.dailynote.common.DateType
 import com.android.dailynote.common.TimeClass
@@ -18,7 +18,8 @@ import java.util.*
 class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel() {
 
     companion object {
-        private const val FIREBASE_DB_URL = BuildConfig.FIREBASE_URL
+//        private const val FIREBASE_DB_URL = BuildConfig.FIREBASE_URL
+        private val FIREBASE_DB_URL = BaseApplication().getMetaDataString("APP_FIREBASE_URL")
         private val database = Firebase.database(FIREBASE_DB_URL)
         private val myRef = database.getReference("daily_note")
     }

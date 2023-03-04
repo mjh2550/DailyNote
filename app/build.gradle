@@ -16,7 +16,7 @@ android {
         versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "FIREBASE_URL", '"https://dailynote-d82f5-default-rtdb.firebaseio.com/"'
+//        buildConfigField "String", "FIREBASE_URL", '"https://dailynote-d82f5-default-rtdb.firebaseio.com/"'
     }
 
     buildTypes {
@@ -29,18 +29,20 @@ android {
     productFlavors {
         free {
             dimension = "version"
-            applicationIdSuffix = ".free"
+//            applicationIdSuffix = ".free" //Firebase와 app id가 맞지 않음
             manifestPlaceholders = [
                 appName: "@string/app_name",
-                appUseAds : "true"
+                appUseAds : "true",
+                appFirebaseUrl : "https://dailynote-d82f5-default-rtdb.firebaseio.com/",
             ]
         }
         pro {
             dimension = "version"
-            applicationIdSuffix = ".pro"
+//            applicationIdSuffix = ".pro"
             manifestPlaceholders = [
                 appName: "@string/app_name",
-                appUseAds : "false"
+                appUseAds : "false",
+                appFirebaseUrl : "https://dailynote-d82f5-default-rtdb.firebaseio.com/",
             ]
         }
     }

@@ -30,7 +30,7 @@
         <!-- 환경변수 메타데이터 -->
         <meta-data android:name="APP_NAME" android:value="${appName}" />
         <meta-data android:name="APP_USE_ADS" android:value="${appUseAds}" />
-
+        <meta-data android:name="APP_FIREBASE_URL" android:value="${appFirebaseUrl}" />
 
         <activity
             android:name=".ui.activity.NoteDetailActivity"
