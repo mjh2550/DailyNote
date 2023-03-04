@@ -1,6 +1,7 @@
 package com.android.dailynote.base
 
 import android.app.Application
+import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -13,11 +14,10 @@ class BaseApplication : Application(){
 //        KakaoSdk.init(this, getString(R.string.kakao_app_key))
     }
 
-    fun getMetaDataString(metaDataKey: String): String {
+    fun getMetaDataString(metaDataKey: String, context: Context): String {
         return try {
-            val ai = packageManager.getApplicationInfo(applicationContext.packageName,
-                PackageManager.ApplicationInfoFlags.of(PackageManager.GET_META_DATA.toLong()));
-            val bundle: Bundle = ai.metaData
+            val ai = context.packageManager.getApplicationInfo(context.packageName,PackageManager.GET_META_DATA)
+            val bundle: Bundle = ai.metaData!!
             bundle.getString(metaDataKey) ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
             ""

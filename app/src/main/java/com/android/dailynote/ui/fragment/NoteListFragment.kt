@@ -27,6 +27,7 @@ import com.android.dailynote.R
 import com.android.dailynote.common.EventType
 import com.android.dailynote.adapters.NoteListAdapter
 import com.android.dailynote.adapters.NoteListListener
+import com.android.dailynote.base.BaseApplication
 import com.android.dailynote.base.BaseFragment
 import com.android.dailynote.common.DateType
 import com.android.dailynote.common.TimeClass
@@ -37,10 +38,20 @@ import com.android.dailynote.databinding.FragmentNoteListBinding
 import com.android.dailynote.ui.activity.NoteDetailActivity
 import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.collections.ArrayList
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener , CompoundButton.OnCheckedChangeListener{
+
+    companion object{
+        lateinit var FIREBASE_DB_URL : String
+        lateinit var database : FirebaseDatabase
+        lateinit var myRef : DatabaseReference
+    }
 
     override val mViewModel: NoteListViewModel by lazy {
         ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
@@ -100,6 +111,11 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     override fun getLayoutRes() = R.layout.fragment_note_list
 
     override fun subscribeUi() {
+        FIREBASE_DB_URL = BaseApplication()
+            .getMetaDataString("APP_FIREBASE_URL",requireActivity())
+        database = Firebase.database(FIREBASE_DB_URL)
+        myRef = database.getReference("daily_note")
+
         val titleText = activity?.findViewById(R.id.title_text) as TextView
         titleText.text = mViewModel.titleName
         val adapter = NoteListAdapter(
@@ -152,7 +168,6 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             btnToDate.text = TimeClass().getCurrentTimeToString(Calendar.getInstance(),DateType.TO_DATE,1)
             btnFromDate.text = TimeClass().getCurrentTimeToString(Calendar.getInstance(),DateType.FROM_DATE)
         }
-
     }
     private lateinit var navController: NavController
 
