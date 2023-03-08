@@ -111,10 +111,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     override fun getLayoutRes() = R.layout.fragment_note_list
 
     override fun subscribeUi() {
-        FIREBASE_DB_URL = BaseApplication()
-            .getMetaDataString("APP_FIREBASE_URL",requireActivity())
-        database = Firebase.database(FIREBASE_DB_URL)
-        myRef = database.getReference("daily_note")
+        setFirebaseDB()
 
         val titleText = activity?.findViewById(R.id.title_text) as TextView
         titleText.text = mViewModel.titleName
@@ -169,6 +166,14 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             btnFromDate.text = TimeClass().getCurrentTimeToString(Calendar.getInstance(),DateType.FROM_DATE)
         }
     }
+
+    private fun setFirebaseDB() {
+        FIREBASE_DB_URL = BaseApplication()
+            .getMetaDataString("APP_FIREBASE_URL", requireActivity())
+        database = Firebase.database(FIREBASE_DB_URL)
+        myRef = database.getReference("daily_note")
+    }
+
     private lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -17,15 +17,8 @@ import java.util.*
 
 class NoteListViewModel(private val repository: NoteRepository) : BaseViewModel() {
 
-    companion object {
-//        private const val FIREBASE_DB_URL = BuildConfig.FIREBASE_URL
-        private val FIREBASE_DB_URL = BaseApplication().getMetaDataString("APP_FIREBASE_URL")
-        private val database = Firebase.database(FIREBASE_DB_URL)
-        private val myRef = database.getReference("daily_note")
-    }
-
     val titleName = "일기장 목록"
-    //    val dataList = repository.getAllNoteList()
+
     var toDate: Date = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.TO_DATE,1).time
     var fromDate: Date = TimeClass().getCurrentTimeToDate(Calendar.getInstance(),DateType.FROM_DATE).time
     private val _dataList :MutableLiveData<List<NoteVO>> = MutableLiveData(emptyList())

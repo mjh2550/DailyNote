@@ -44,6 +44,11 @@ class NoteRepository(applicationContext : Context){
         db.noteDao().insert(noteVO = noteVO)
     }
 
+    suspend fun updateNoteContents(noteVO: NoteVO)
+        = withContext(CoroutineScope(Dispatchers.Default).coroutineContext){
+            db.noteDao().update(noteVO)
+    }
+
     fun deleteAll()  {
         CoroutineScope(Dispatchers.IO).launch {
             db.noteDao().deleteAll()

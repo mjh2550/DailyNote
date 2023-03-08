@@ -53,7 +53,7 @@ interface NoteDao {
     @Query("DELETE FROM note_table WHERE note_id IN (:deleteList)")
     fun deleteByList( deleteList : MutableList<String> )
 
-//    @Update
-//    fun update(noteVO: NoteVO)
+    @Update
+    fun update(noteVO: NoteVO)
 
 }

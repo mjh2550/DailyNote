@@ -1,21 +1,14 @@
 package com.android.dailynote.ui.activity
 
-import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
-import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.android.dailynote.R
 import com.android.dailynote.base.BaseActivity
 import com.android.dailynote.data.model.roomdb.NoteRepository
-import com.android.dailynote.databinding.ActivityNoteViewBinding
 import com.android.dailynote.databinding.ActivityNoteWriteBinding
-import com.android.dailynote.ui.fragment.NoteListFragment
-import com.android.dailynote.ui.viewmodel.NoteListViewModel
 import com.android.dailynote.ui.viewmodel.NoteWriteViewModel
 
 class NoteWriteActivity : BaseActivity<ActivityNoteWriteBinding,NoteWriteViewModel>() ,OnClickListener {
@@ -27,6 +20,12 @@ class NoteWriteActivity : BaseActivity<ActivityNoteWriteBinding,NoteWriteViewMod
         })[NoteWriteViewModel::class.java]
     }
 
+    enum class NoteState {
+        STATE_WRITE, STATE_EDIT
+    }
+    lateinit var noteState: NoteState
+    private var noteId : Long = 0
+
     override fun getLayoutRes() = R.layout.activity_note_write
 
     override fun subscribeUi() {
@@ -34,7 +33,21 @@ class NoteWriteActivity : BaseActivity<ActivityNoteWriteBinding,NoteWriteViewMod
         }
         with(mDataBinding){
             vm = mViewModel
-            noteWriteTitleBar.titleText.text = "일기장 작성"
+            noteId = intent.extras?.getLong("NOTE_ID") ?: 0
+            noteState = if(noteId.toInt() == 0) NoteState.STATE_WRITE
+            else NoteState.STATE_EDIT
+
+            val titleText = if(noteState == NoteState.STATE_WRITE)
+                "일기장 작성" else "일기장 수정"
+
+            if(noteState == NoteState.STATE_EDIT){
+                val noteTitleText = intent.extras?.getString("NOTE_TITLE") ?: ""
+                val noteContentsText = intent.extras?.getString("NOTE_CONTENTS") ?: ""
+                mViewModel.edtTitleText.value = noteTitleText
+                mViewModel.edtContentsText.value = noteContentsText
+            }
+
+            noteWriteTitleBar.titleText.text = titleText
             btnCancel.setOnClickListener(this@NoteWriteActivity)
             btnSave.setOnClickListener(this@NoteWriteActivity)
         }
@@ -55,8 +68,9 @@ class NoteWriteActivity : BaseActivity<ActivityNoteWriteBinding,NoteWriteViewMod
 
     private fun onClickSaveButton(){
         val intent = Intent()
-        intent.putExtra("title",mViewModel.edtTitleText.value)
-        intent.putExtra("contents",mViewModel.edtContentsText.value)
+        intent.putExtra("id", noteId)
+        intent.putExtra("title", mViewModel.edtTitleText.value)
+        intent.putExtra("contents", mViewModel.edtContentsText.value)
         setResult(RESULT_OK,intent)
         if(!isFinishing)finish()
     }
