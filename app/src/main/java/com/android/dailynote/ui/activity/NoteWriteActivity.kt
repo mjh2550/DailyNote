@@ -1,8 +1,10 @@
 package com.android.dailynote.ui.activity
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.android.dailynote.R
@@ -54,9 +56,11 @@ class NoteWriteActivity : BaseActivity<ActivityNoteWriteBinding,NoteWriteViewMod
     }
 
     override fun onClick(p0: View?) {
-        when(p0?.id){
-            R.id.btn_cancel -> onClickCancelButton()
-            R.id.btn_save -> onClickSaveButton()
+        if(isValidateData()){
+            when(p0?.id){
+                R.id.btn_cancel -> onClickCancelButton()
+                R.id.btn_save -> onClickSaveButton()
+            }
         }
     }
 
@@ -73,6 +77,20 @@ class NoteWriteActivity : BaseActivity<ActivityNoteWriteBinding,NoteWriteViewMod
         intent.putExtra("contents", mViewModel.edtContentsText.value)
         setResult(RESULT_OK,intent)
         if(!isFinishing)finish()
+    }
+
+    private fun isValidateData() : Boolean{
+        if(mDataBinding.edtNoteTitle.text.isEmpty()){
+            //Error alert
+            Toast.makeText(this@NoteWriteActivity,"글 제목이 비어있습니다.",Toast.LENGTH_SHORT).show()
+            return false
+        }else if(mDataBinding.edtNoteContents.text.isEmpty()){
+            //Error alert
+            Toast.makeText(this@NoteWriteActivity,"내용이 비어있습니다.",Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
     }
 
 }
