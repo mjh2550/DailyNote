@@ -16,6 +16,7 @@ import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.databinding.ActivityNoteDetailBinding
 import com.android.dailynote.ui.viewmodel.NoteDetailViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 class NoteDetailActivity : BaseActivity<ActivityNoteDetailBinding,NoteDetailViewModel>() {
@@ -42,9 +43,12 @@ class NoteDetailActivity : BaseActivity<ActivityNoteDetailBinding,NoteDetailView
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
         mViewModel.noteContents.observe(this@NoteDetailActivity){
+            val regTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(it.regTime) as String
             mDataBinding.detailTitleBar.titleText.text = it?.noteTitle
             mDataBinding.tvNoteTitle.text = it?.noteTitle
             mDataBinding.tvNoteContents.text = it?.noteContents
+            mDataBinding.tvNoteWriter.text = it?.noteWriter
+            mDataBinding.tvRegTime.text = regTime
         }
     }
 

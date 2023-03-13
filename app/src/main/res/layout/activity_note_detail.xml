@@ -42,18 +42,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_reg_time"
+                        android:gravity="right"
+                        android:hint="time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_note_writer"
+                        android:gravity="right"
+                        android:hint="writer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
 
                     <TextView
                         android:id="@+id/tv_note_title"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{noteVO.noteTitle}" />
+                        />
 
                     <TextView
                         android:id="@+id/tv_note_contents"
+                        android:hint="contents"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{noteVO.noteContents}"/>
+                        />
 
                 </LinearLayout>
             </ScrollView>
