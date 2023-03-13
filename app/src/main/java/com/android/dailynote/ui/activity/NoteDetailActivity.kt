@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.android.dailynote.R
@@ -35,7 +36,9 @@ class NoteDetailActivity : BaseActivity<ActivityNoteDetailBinding,NoteDetailView
         }
         with(mDataBinding){
             vm = mViewModel
+            val backArrow =  ContextCompat.getDrawable(this@NoteDetailActivity, R.drawable.ic_baseline_arrow_back_24);
             setSupportActionBar(detailTitleBar.toolbar)
+            supportActionBar?.setHomeAsUpIndicator(backArrow)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
         mViewModel.noteContents.observe(this@NoteDetailActivity){
