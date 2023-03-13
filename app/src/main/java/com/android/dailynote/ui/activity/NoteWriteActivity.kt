@@ -1,6 +1,7 @@
 package com.android.dailynote.ui.activity
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.View
 import android.view.View.OnClickListener
@@ -58,19 +59,19 @@ class NoteWriteActivity : BaseActivity<ActivityNoteWriteBinding,NoteWriteViewMod
     override fun onClick(p0: View?) {
         if(isValidateData()){
             when(p0?.id){
-                R.id.btn_cancel -> onClickCancelButton()
-                R.id.btn_save -> onClickSaveButton()
+                R.id.btn_cancel -> showAlertDialog(false)
+                R.id.btn_save -> showAlertDialog(true)
             }
         }
     }
 
-    private fun onClickCancelButton() {
+    private fun onClickCancel() {
         val intent = Intent()
         setResult(RESULT_CANCELED,intent)
         finish()
     }
 
-    private fun onClickSaveButton(){
+    private fun onClickSave(){
         val intent = Intent()
         intent.putExtra("id", noteId)
         intent.putExtra("title", mViewModel.edtTitleText.value)
@@ -91,6 +92,23 @@ class NoteWriteActivity : BaseActivity<ActivityNoteWriteBinding,NoteWriteViewMod
         }
 
         return true
+    }
+
+    private fun showAlertDialog(isSave : Boolean) {
+        //TODO 디자인 커스텀 필요
+        if(isSave) {
+            val builder = AlertDialog.Builder(this)
+                .setTitle("입력한 데이터를 저장하시겠습니까?")
+                .setPositiveButton("확인") { dialog, which -> onClickSave() }
+                .setNegativeButton("취소") { dialog, which -> dialog.dismiss() }
+                .show()
+        } else {
+            val builder = AlertDialog.Builder(this)
+                .setTitle("입력하던 데이터를 초기화하고 메인으로 이동하시겠습니까?\n초기화한 데이터는 저장되지 않습니다.")
+                .setPositiveButton("확인") { dialog, which -> onClickCancel() }
+                .setNegativeButton("취소") { dialog, which -> dialog.dismiss() }
+                .show()
+        }
     }
 
 }
