@@ -44,7 +44,7 @@ class NoteDetailActivity : BaseActivity<ActivityNoteDetailBinding,NoteDetailView
         }
         mViewModel.noteContents.observe(this@NoteDetailActivity){
             val regTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(it.regTime) as String
-            mDataBinding.detailTitleBar.titleText.text = it?.noteTitle
+            mDataBinding.detailTitleBar.titleText.text = "일기장 상세조회"
             mDataBinding.tvNoteTitle.text = it?.noteTitle
             mDataBinding.tvNoteContents.text = it?.noteContents
             mDataBinding.tvNoteWriter.text = it?.noteWriter
