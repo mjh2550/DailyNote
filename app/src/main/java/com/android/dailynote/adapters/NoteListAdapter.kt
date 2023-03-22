@@ -22,8 +22,8 @@ class NoteListAdapter(private val clickListener: NoteListListener)
 
     class ListViewHolder private constructor(private val binding: ListItemBinding): RecyclerView.ViewHolder(binding.root) {
 
-       companion object{
-           fun from(parent: ViewGroup) : ListViewHolder{
+       companion object {
+           fun from(parent: ViewGroup) : ListViewHolder {
                val layoutInflater = LayoutInflater.from(parent.context)
                val binding = ListItemBinding.inflate(layoutInflater,parent,false)
                return ListViewHolder(binding)

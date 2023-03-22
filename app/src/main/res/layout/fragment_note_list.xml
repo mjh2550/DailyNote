@@ -23,6 +23,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <CheckBox
+            android:visibility="gone"
             android:id="@+id/cb_all_check"
             android:background="@drawable/search_bar_borderline"
             android:layout_width="0dp"
@@ -31,25 +32,39 @@
             android:buttonTint="@color/blue"
             android:layout_weight="0.1" />
 
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_margin="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:gravity="center"
+            android:entries="@array/search_type"
+            android:background="@drawable/search_bar_borderline"
+            />
+
         <!-- 날짜 , 검색어 , 검색 버튼 -->
         <Button
             android:id="@+id/btn_to_date"
             android:layout_margin="1dp"
+            android:padding="0dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
+            android:layout_weight="0.325"
             android:background="@drawable/search_bar_borderline"
-            android:text="To_Date"
+            android:hint="To_Date"
+            android:fontFamily="@font/bmdh"
             android:textColor="@color/black" />
 
         <Button
             android:id="@+id/btn_from_date"
+            android:padding="0dp"
             android:layout_margin="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
+            android:layout_weight="0.325"
             android:background="@drawable/search_bar_borderline"
-            android:text="From_Date"
+            android:fontFamily="@font/bmdh"
+            android:hint="From_Date"
             android:textColor="@color/black" />
 
         <!--<EditText
@@ -88,11 +103,11 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add"
         android:layout_width="wrap_content"
+        android:backgroundTint="@color/blue"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="86dp"
-        android:visibility="gone"
-        android:src="@drawable/ic_add_black_24dp"
+        android:src="@drawable/ic_baseline_add_white_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -114,6 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
+        android:visibility="gone"
         android:src="@drawable/ic_baseline_more_vert_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

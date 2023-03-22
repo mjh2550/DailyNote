@@ -85,9 +85,9 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
 //            mViewModel.loadData()
 
         } else {
-            ErrorUtil.showErrorMessage(requireActivity(),getString(R.string.msg_save_fail)) {
-                //callback code
-            }
+//            ErrorUtil.showErrorMessage(requireActivity(),getString(R.string.msg_save_fail)) {
+//                //callback code
+//            }
         }
     }
 
