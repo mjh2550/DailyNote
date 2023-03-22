@@ -27,6 +27,7 @@
             android:background="@drawable/search_bar_borderline"
             android:layout_width="0dp"
             android:layout_margin="1dp"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:buttonTint="@color/blue"
             android:layout_weight="0.1" />
@@ -37,7 +38,7 @@
             android:layout_margin="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
+            android:layout_weight="0.45"
             android:background="@drawable/search_bar_borderline"
             android:text="To_Date"
             android:textColor="@color/black" />
@@ -47,7 +48,7 @@
             android:layout_margin="1dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
+            android:layout_weight="0.45"
             android:background="@drawable/search_bar_borderline"
             android:text="From_Date"
             android:textColor="@color/black" />

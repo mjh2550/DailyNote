@@ -3,29 +3,26 @@ package com.android.dailynote.ui.fragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import android.widget.CalendarView
 import android.widget.CompoundButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.dailynote.R
 import com.android.dailynote.common.EventType
 import com.android.dailynote.adapters.NoteListAdapter
+import com.android.dailynote.adapters.NoteListAdapterHideCheckbox
 import com.android.dailynote.adapters.NoteListListener
 import com.android.dailynote.base.BaseApplication
 import com.android.dailynote.base.BaseFragment
@@ -43,7 +40,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
-import kotlin.collections.ArrayList
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener , CompoundButton.OnCheckedChangeListener{
 
@@ -115,28 +111,9 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
 
         val titleText = activity?.findViewById(R.id.title_text) as TextView
         titleText.text = mViewModel.titleName
-        val adapter = NoteListAdapter(
+        val adapter = NoteListAdapterHideCheckbox (
             NoteListListener { _, isChecked, noteVO, eventType ->
-                when(eventType){
-                    EventType.ON_BUTTON_CLICK -> {
-//                        Toast.makeText(requireContext(),"ON_BUTTON_CLICK ${noteVO?.noteId}",Toast.LENGTH_SHORT).show()
-                        val intent = Intent(requireActivity(),NoteDetailActivity::class.java)
-                        intent.putExtra("NOTE_ID",noteVO?.noteId)
-//                        startForResult.launch(intent)
-                        startActivity(intent)
-                    }
-                    EventType.ON_CHECKBOX_CHANGED -> {
-//                        Toast.makeText(requireContext(),"ON_CHECKBOX_CHANGED",Toast.LENGTH_SHORT).show()
-                        for(listVo in mViewModel.dataList.value!!){
-                            if(noteVO?.noteId == listVo.noteId){
-                                listVo.isChecked = isChecked!!
-                            }
-                        }
-                    }
-                    EventType.ON_RADIOBUTTON_CLICK -> {
-                        Toast.makeText(requireContext(),"ON_RADIOBUTTON_CLICK",Toast.LENGTH_SHORT).show()
-                    }
-                }
+                noteListEventListener(eventType, noteVO, isChecked)
             }
         )
 
@@ -167,6 +144,30 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         }
     }
 
+    private fun noteListEventListener(
+        eventType: EventType,
+        noteVO: NoteVO?,
+        isChecked: Boolean?
+    ) {
+        when (eventType) {
+            EventType.ON_BUTTON_CLICK -> {
+                val intent = Intent(requireActivity(), NoteDetailActivity::class.java)
+                intent.putExtra("NOTE_ID", noteVO?.noteId)
+                startActivity(intent)
+            }
+            EventType.ON_CHECKBOX_CHANGED -> {
+                for (listVo in mViewModel.dataList.value!!) {
+                    if (noteVO?.noteId == listVo.noteId) {
+                        listVo.isChecked = isChecked!!
+                    }
+                }
+            }
+            EventType.ON_RADIOBUTTON_CLICK -> {
+                Toast.makeText(requireContext(), "ON_RADIOBUTTON_CLICK", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun setFirebaseDB() {
         FIREBASE_DB_URL = BaseApplication()
             .getMetaDataString("APP_FIREBASE_URL", requireActivity())
@@ -186,22 +187,37 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         when (btnId?.id){
             R.id.btn_add -> {
                 val intent = Intent(requireActivity(),NoteWriteActivity::class.java)
-                //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                //        startActivity(intent)
                 startForResult.launch(intent)
             }
             R.id.btn_del-> {
-                mViewModel.isLoading.value = true
-                val list = mutableListOf<NoteVO>()
-                var cnt = 0;
-                for (noteVo in mDataBinding.vm?.dataList?.value!!){
-                    if(noteVo.isChecked) {
-                        list.add(cnt++,noteVo)
+                val noteListAdapter = NoteListAdapter (
+                    NoteListListener{
+                            _, isChecked, noteVO , eventType ->
+                        noteListEventListener(eventType, noteVO, isChecked)
+                    }
+                )
+                mViewModel.dataList.observe(viewLifecycleOwner){
+                    it?.let{
+                        noteListAdapter.submitList(it)
                     }
                 }
-                mDataBinding.vm?.deleteList = list
-                mDataBinding.vm?.deleteList()
-                mDataBinding.lvNoteItem.adapter?.notifyDataSetChanged()
+                mDataBinding.lvNoteItem.adapter = noteListAdapter
+                mDataBinding.cbAllCheck.visibility = View.VISIBLE
+                (mDataBinding.btnToDate.layoutParams as LinearLayout.LayoutParams).weight = 0.4f
+                (mDataBinding.btnFromDate.layoutParams as LinearLayout.LayoutParams).weight = 0.4f
+
+
+                /* mViewModel.isLoading.value = true
+                 val list = mutableListOf<NoteVO>()
+                 var cnt = 0;
+                 for (noteVo in mDataBinding.vm?.dataList?.value!!){
+                     if(noteVo.isChecked) {
+                         list.add(cnt++,noteVo)
+                     }
+                 }
+                 mDataBinding.vm?.deleteList = list
+                 mDataBinding.vm?.deleteList()
+                 mDataBinding.lvNoteItem.adapter?.notifyDataSetChanged()*/
             }
             R.id.btn_more -> {
                 val isBtnGone = mDataBinding.btnAdd.isGone

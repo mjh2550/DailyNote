@@ -1,19 +1,15 @@
 package com.android.dailynote.adapters
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.ListAdapter
-import android.widget.TextView
-import android.widget.Toast
+import android.view.animation.AlphaAnimation
+import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.android.dailynote.R
 import com.android.dailynote.data.model.entity.NoteVO
-import com.android.dailynote.databinding.FragmentNoteListBinding
 import com.android.dailynote.databinding.ListItemBinding
 import java.text.SimpleDateFormat
 
@@ -23,7 +19,7 @@ class NoteListAdapter(private val clickListener: NoteListListener)
     class ListViewHolder private constructor(private val binding: ListItemBinding): RecyclerView.ViewHolder(binding.root) {
 
        companion object{
-           fun from(parent: ViewGroup) : ListViewHolder{
+           fun from(parent: ViewGroup) : ListViewHolder {
                val layoutInflater = LayoutInflater.from(parent.context)
                val binding = ListItemBinding.inflate(layoutInflater,parent,false)
                return ListViewHolder(binding)
@@ -41,6 +37,8 @@ class NoteListAdapter(private val clickListener: NoteListListener)
            binding.cbCheck.isChecked = item.isChecked
            binding.noteVO = item
            binding.clickListener = clickListener
+           binding.cbCheck.visibility = View.VISIBLE
+           (binding.tvNoteTitle.layoutParams as LinearLayout.LayoutParams).weight = 0.6f
        }
     }
 
