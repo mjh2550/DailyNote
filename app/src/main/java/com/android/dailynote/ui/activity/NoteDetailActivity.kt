@@ -53,7 +53,7 @@ class NoteDetailActivity : BaseActivity<ActivityNoteDetailBinding,NoteDetailView
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.titlebar_menu, menu)
+        menuInflater.inflate(R.menu.note_detail_titlebar_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

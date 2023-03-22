@@ -26,6 +26,7 @@ abstract class BaseFragment<DB: ViewDataBinding, VM: BaseViewModel> : Fragment()
         mDataBinding = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false)
         mDataBinding.lifecycleOwner = this.viewLifecycleOwner
 //        mDataBinding.lifecycleOwner = this
+
         mViewModel.apply {
             isLoading.observe(viewLifecycleOwner) {
                 if (it) {

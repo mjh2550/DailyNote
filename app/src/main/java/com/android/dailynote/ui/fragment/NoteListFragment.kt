@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.view.*
 import android.view.View.OnClickListener
 import android.widget.CalendarView
 import android.widget.CompoundButton
@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -35,6 +36,7 @@ import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.data.model.roomdb.NoteRepository
 import com.android.dailynote.data.network.util.ErrorUtil
 import com.android.dailynote.databinding.FragmentNoteListBinding
+import com.android.dailynote.ui.activity.HomeActivity
 import com.android.dailynote.ui.activity.NoteDetailActivity
 import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
@@ -111,8 +113,8 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
     override fun getLayoutRes() = R.layout.fragment_note_list
 
     override fun subscribeUi() {
+        setHasOptionsMenu(true)
         setFirebaseDB()
-
         val titleText = activity?.findViewById(R.id.title_text) as TextView
         titleText.text = mViewModel.titleName
         val adapter = NoteListAdapter(
@@ -165,6 +167,11 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
             btnToDate.text = TimeClass().getCurrentTimeToString(Calendar.getInstance(),DateType.TO_DATE,1)
             btnFromDate.text = TimeClass().getCurrentTimeToString(Calendar.getInstance(),DateType.FROM_DATE)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.note_list_titlebar_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun setFirebaseDB() {
