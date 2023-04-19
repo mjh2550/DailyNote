@@ -22,7 +22,6 @@ import com.android.dailynote.ui.activity.NoteDetailActivity
 import com.android.dailynote.ui.viewmodel.HomeViewModel
 import com.android.dailynote.util.CalendarDecorator
 import com.prolificinteractive.materialcalendarview.CalendarDay
-import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,7 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeViewModel>() {
         val adapter = HomeCalendarListAdapter(
             HomeCalendarListListener { v,vo,type ->
                 when(type){
-                    EventType.ON_BUTTON_CLICK -> {
+                    EventType.ON_CLICK -> {
                         val intent = Intent(requireActivity(), NoteDetailActivity::class.java)
                         intent.putExtra("NOTE_ID", vo?.noteId)
                         startActivity(intent)

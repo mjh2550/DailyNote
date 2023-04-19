@@ -3,25 +3,19 @@ package com.android.dailynote.ui.fragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.View.OnClickListener
-import android.widget.CalendarView
 import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.dailynote.R
@@ -34,9 +28,7 @@ import com.android.dailynote.common.DateType
 import com.android.dailynote.common.TimeClass
 import com.android.dailynote.data.model.entity.NoteVO
 import com.android.dailynote.data.model.roomdb.NoteRepository
-import com.android.dailynote.data.network.util.ErrorUtil
 import com.android.dailynote.databinding.FragmentNoteListBinding
-import com.android.dailynote.ui.activity.HomeActivity
 import com.android.dailynote.ui.activity.NoteDetailActivity
 import com.android.dailynote.ui.activity.NoteWriteActivity
 import com.android.dailynote.ui.viewmodel.NoteListViewModel
@@ -45,7 +37,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
-import kotlin.collections.ArrayList
 
 class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>() ,OnClickListener , CompoundButton.OnCheckedChangeListener{
 
@@ -120,7 +111,7 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
         val adapter = NoteListAdapter(
             NoteListListener { _, isChecked, noteVO, eventType ->
                 when(eventType){
-                    EventType.ON_BUTTON_CLICK -> {
+                    EventType.ON_CLICK -> {
 //                        Toast.makeText(requireContext(),"ON_BUTTON_CLICK ${noteVO?.noteId}",Toast.LENGTH_SHORT).show()
                         val intent = Intent(requireActivity(),NoteDetailActivity::class.java)
                         intent.putExtra("NOTE_ID",noteVO?.noteId)
@@ -137,6 +128,9 @@ class NoteListFragment : BaseFragment<FragmentNoteListBinding,NoteListViewModel>
                     }
                     EventType.ON_RADIOBUTTON_CLICK -> {
                         Toast.makeText(requireContext(),"ON_RADIOBUTTON_CLICK",Toast.LENGTH_SHORT).show()
+                    }
+                    EventType.ON_LONG_CLICK -> {
+                        Toast.makeText(requireContext(),"ON_LONG_CLICK",Toast.LENGTH_SHORT).show()
                     }
                 }
             }

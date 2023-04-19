@@ -44,6 +44,7 @@
         <TextView
             android:id="@+id/tv_note_id"
             android:onClick="@{(v) -> clickListener.onClick(v,noteVO)}"
+            android:onLongClick="@{(v) -> clickListener.onLongClick(v,noteVO)}"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.1"
@@ -56,6 +57,7 @@
         <TextView
             android:id="@+id/tv_note_title"
             android:onClick="@{(v) -> clickListener.onClick(v,noteVO)}"
+            android:onLongClick="@{(v) -> clickListener.onLongClick(v,noteVO)}"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.6"
@@ -73,6 +75,7 @@
             android:layout_weight="0.3"
             android:fontFamily="@font/bmdh"
             android:onClick="@{(v) -> clickListener.onClick(v,noteVO)}"
+            android:onLongClick="@{(v) -> clickListener.onLongClick(v,noteVO)}"
             android:gravity="center"
             android:hint="YY/MM/DD HH:MM:SS"
             android:textColor="@color/black"
