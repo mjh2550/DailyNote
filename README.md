@@ -9,6 +9,7 @@
 
 ## 개발 환경
 * Android Studio , Kotlin
+* MVVM + MVP , Clean Architecture, Coroutine, retrofit, firebase
 
 ## 개발 화면
 ![KakaoTalk_20230420_013533074](https://user-images.githubusercontent.com/62639477/233760710-6dd56a7a-03b5-4b89-8a53-ec93790166c9.jpg)
